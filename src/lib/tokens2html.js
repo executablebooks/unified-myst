@@ -6,7 +6,7 @@
 import { tokenTypes } from './constants.js'
 
 /**
- * The mystTarget extension, to convert the syntax tokens to HTML.
+ * The micromark HTML extension, to convert mystTarget tokens directly to HTML.
  * @type {HtmlExtension}
  */
 export const mystTargetHtmlExt = {

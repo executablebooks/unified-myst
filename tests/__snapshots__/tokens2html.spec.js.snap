@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Convert source to HTML " (abc)=" 1`] = `"<a class=\\"anchor\\" id=\\"abc\\" href=\\"#abc\\">🔗</a>"`;
+
+exports[`Convert source to HTML "()=" 1`] = `"<p>()=</p>"`;
+
+exports[`Convert source to HTML "(a bc)=" 1`] = `"<a class=\\"anchor\\" id=\\"a bc\\" href=\\"#a bc\\">🔗</a>"`;
+
+exports[`Convert source to HTML "(ab\\\\\\\\c)=" 1`] = `"<a class=\\"anchor\\" id=\\"ab\\\\c\\" href=\\"#ab\\\\c\\">🔗</a>"`;
+
+exports[`Convert source to HTML "(abc)" 1`] = `"<p>(abc)</p>"`;
+
+exports[`Convert source to HTML "(abc)= " 1`] = `"<a class=\\"anchor\\" id=\\"abc\\" href=\\"#abc\\">🔗</a>"`;
+
+exports[`Convert source to HTML "(abc)= d" 1`] = `"<p>(abc)= d</p>"`;
+
+exports[`Convert source to HTML "(abc)=" 1`] = `"<a class=\\"anchor\\" id=\\"abc\\" href=\\"#abc\\">🔗</a>"`;

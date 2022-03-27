@@ -1,7 +1,4 @@
 /**
- * The micromark extension, to parse the source syntax to events.
- * Events are token enter/exits, which in-turn are references to slices of the source text.
- *
  * @typedef {import('micromark-util-types').Extension} Extension
  * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
  * @typedef {import('micromark-util-types').State} State
@@ -16,7 +13,9 @@ import { markdownLineEnding, markdownSpace } from 'micromark-util-character'
 import { tokenTypes } from './constants.js'
 
 /**
- * The mystTarget extension, to parse the source syntax to events.
+ * The micromark extension, to parse the source syntax to events.
+ * Events are token enter/exits, which in-turn are references to slices of the source text.
+ *
  * @type {Extension}
  */
 export const mystTargetMmarkExt = {
@@ -108,16 +107,17 @@ function mystTargetTokenize(effects, ok, nok) {
         }
         effects.consume(code)
         effects.exit(tokenTypes.mystTargetMarker)
+        effects.exit(tokenTypes.mystTarget)
+        // consume trailing whitespace
         return factorySpace(effects, end, types.whitespace)
     }
 
     /**
-     * Close the mystTarget, if no additional non-whitespace is found.
+     * Accept the mystTarget, if no additional non-whitespace is found.
      * @type {State}
      */
     function end(code) {
         if (code === codes.eof || markdownLineEnding(code)) {
-            effects.exit(tokenTypes.mystTarget)
             return ok(code)
         }
         return nok(code)

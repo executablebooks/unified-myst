@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Convert source to MDAST " (abc)=" 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "label": "abc",
+      "position": Object {
+        "end": Object {
+          "column": 8,
+          "line": 1,
+          "offset": 7,
+        },
+        "start": Object {
+          "column": 2,
+          "line": 1,
+          "offset": 1,
+        },
+      },
+      "type": "target",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 8,
+      "line": 1,
+      "offset": 7,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`Convert source to MDAST "(a bc)=" 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "label": "a bc",
+      "position": Object {
+        "end": Object {
+          "column": 8,
+          "line": 1,
+          "offset": 7,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "target",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 8,
+      "line": 1,
+      "offset": 7,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`Convert source to MDAST "(ab\\\\\\\\c)=" 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "label": "ab\\\\c",
+      "position": Object {
+        "end": Object {
+          "column": 9,
+          "line": 1,
+          "offset": 8,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "target",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 9,
+      "line": 1,
+      "offset": 8,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`Convert source to MDAST "(abc)= " 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "label": "abc",
+      "position": Object {
+        "end": Object {
+          "column": 7,
+          "line": 1,
+          "offset": 6,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "target",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 8,
+      "line": 1,
+      "offset": 7,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`Convert source to MDAST "(abc)=" 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "label": "abc",
+      "position": Object {
+        "end": Object {
+          "column": 7,
+          "line": 1,
+          "offset": 6,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "target",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 7,
+      "line": 1,
+      "offset": 6,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;

@@ -183,13 +183,167 @@ Array [
 ]
 `;
 
+exports[`Convert source to tokens "(ab\\\\\\\\c)=" 1`] = `
+Array [
+  Array [
+    "enter",
+    "mystTarget",
+    "1.1",
+    "1.9",
+  ],
+  Array [
+    "enter",
+    "mystTargetMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "exit",
+    "mystTargetMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "enter",
+    "mystTargetString",
+    "1.2",
+    "1.7",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.2",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.2",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "characterEscape",
+    "1.4",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "escapeMarker",
+    "1.4",
+    "1.5",
+  ],
+  Array [
+    "exit",
+    "escapeMarker",
+    "1.4",
+    "1.5",
+  ],
+  Array [
+    "enter",
+    "characterEscapeValue",
+    "1.5",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "characterEscapeValue",
+    "1.5",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "characterEscape",
+    "1.4",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.6",
+    "1.7",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.6",
+    "1.7",
+  ],
+  Array [
+    "exit",
+    "mystTargetString",
+    "1.2",
+    "1.7",
+  ],
+  Array [
+    "enter",
+    "mystTargetMarker",
+    "1.7",
+    "1.9",
+  ],
+  Array [
+    "exit",
+    "mystTargetMarker",
+    "1.7",
+    "1.9",
+  ],
+  Array [
+    "exit",
+    "mystTarget",
+    "1.1",
+    "1.9",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "(abc)" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.6",
+  ],
+]
+`;
+
 exports[`Convert source to tokens "(abc)= " 1`] = `
 Array [
   Array [
     "enter",
     "mystTarget",
     "1.1",
-    "1.8",
+    "1.7",
   ],
   Array [
     "enter",
@@ -238,24 +392,65 @@ Array [
     "mystTargetMarker",
     "1.5",
     "1.7",
-  ],
-  Array [
-    "enter",
-    "whitespace",
-    "1.7",
-    "1.8",
-  ],
-  Array [
-    "exit",
-    "whitespace",
-    "1.7",
-    "1.8",
   ],
   Array [
     "exit",
     "mystTarget",
     "1.1",
+    "1.7",
+  ],
+  Array [
+    "enter",
+    "whitespace",
+    "1.7",
     "1.8",
+  ],
+  Array [
+    "exit",
+    "whitespace",
+    "1.7",
+    "1.8",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "(abc)= d" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.9",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.9",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.9",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.9",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.9",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.9",
   ],
 ]
 `;
