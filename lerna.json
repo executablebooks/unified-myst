@@ -2,6 +2,9 @@
     "packages": ["packages/*"],
     "version": "independent",
     "command": {
-        "message": "🚀 RELEASE"
+        "publish": {
+            "allowBranch": "main",
+            "message": "🚀 RELEASE: %s"
+        }
     }
 }

@@ -25,6 +25,9 @@
             "import": "./src/index.js"
         }
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "clean": "rimraf dist",
         "build:types": "tsc",
