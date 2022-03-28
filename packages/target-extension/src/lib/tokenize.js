@@ -5,11 +5,11 @@
  */
 
 import { factorySpace } from 'micromark-factory-space'
+import { markdownLineEnding, markdownSpace } from 'micromark-util-character'
 import { codes } from 'micromark-util-symbol/codes.js'
 import { constants } from 'micromark-util-symbol/constants.js'
 import { types } from 'micromark-util-symbol/types.js'
 import { ok as assert } from 'uvu/assert'
-import { markdownLineEnding, markdownSpace } from 'micromark-util-character'
 import { tokenTypes } from './constants.js'
 
 /**
