@@ -137,6 +137,8 @@ See [this guide](https://jestjs.io/docs/ecmascript-modules) for steps required f
 [rollup.js](https://rollupjs.org/guide/en/) is used for package bundling.
 Note that most packages in the [unified] ecosystem are [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
 
+To release new versions of the packages, run `lerna publish`.
+
 [unified]: https://unifiedjs.com/
 [remark]: https://github.com/remarkjs/remark
 [micromark-tokens]: https://github.com/micromark/micromark#parse
