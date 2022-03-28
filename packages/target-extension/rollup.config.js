@@ -2,54 +2,65 @@ import babel from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 
-export default {
-    input: 'src/index.js',
+// transpile ES6/7 code
+// This follows micromark-build,
+// to replace unnecessary asserts and constant aliases.
+const babelPlugin = babel({
+    babelHelpers: 'bundled',
     plugins: [
-        babel({
-            babelHelpers: 'bundled',
-            // transpile ES6/7 code
-            // This follows micromark-build, to replace unnecessary constant aliases.
-            plugins: [
-                [
-                    'babel-plugin-unassert',
-                    {
-                        modules: [
-                            'assert',
-                            'node:assert',
-                            'power-assert',
-                            'uvu/assert',
-                        ],
-                    },
+        [
+            'babel-plugin-unassert',
+            {
+                modules: [
+                    'assert',
+                    'node:assert',
+                    'power-assert',
+                    'uvu/assert',
                 ],
-                [
-                    'babel-plugin-inline-constants',
-                    {
-                        modules: [
-                            'micromark-util-symbol/codes.js',
-                            'micromark-util-symbol/constants.js',
-                            'micromark-util-symbol/types.js',
-                            'micromark-util-symbol/values.js',
-                        ],
-                    },
+            },
+        ],
+        [
+            'babel-plugin-inline-constants',
+            {
+                modules: [
+                    'micromark-util-symbol/codes.js',
+                    'micromark-util-symbol/constants.js',
+                    'micromark-util-symbol/types.js',
+                    'micromark-util-symbol/values.js',
                 ],
-            ],
-        }),
+            },
+        ],
     ],
-    output: [
-        {
+})
+
+export default [
+    {
+        // Build for use as a node module
+        input: 'src/index.js',
+        plugins: [babelPlugin],
+        external: ['micromark-factory-space', 'micromark-util-character'],
+        output: {
             dir: 'dist/module',
             format: 'esm',
             preserveModules: true,
-            sourcemap: true,
+            sourcemap: false,
         },
-        {
+    },
+    {
+        // Build for use as a browser module
+        input: 'src/index.js',
+        plugins: [
+            babelPlugin,
+            // resolve third party modules in node_modules
+            nodeResolve({
+                browser: true,
+            }),
+        ],
+        output: {
             file: 'dist/index.esm.min.js',
             format: 'esm',
-            plugins: [
-                nodeResolve({ browser: true }), // resolve third party modules in node_modules
-                terser(),
-            ],
+            plugins: [terser()],
             sourcemap: true,
         },
-    ],
-}
+    },
+]
