@@ -9,7 +9,7 @@ It currently contains packages for:
 - Directly [compiling HTML](https://github.com/micromark/micromark#compile) from the tokens
 - Generating the corresponding [MDAST-nodes] from the tokens, for use with [remark]
 
-All packages are [scoped](https://docs.npmjs.com/cli/v8/using-npm/scope) under the `@unified-myst` namespace.
+All packages are [scoped](https://docs.npmjs.com/cli/v8/using-npm/scope) under the `@unified-myst` namespace: <https://www.npmjs.com/org/unified-myst>
 
 ## Example
 
