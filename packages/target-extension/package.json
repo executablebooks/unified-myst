@@ -1,6 +1,6 @@
 {
     "name": "@unified-myst/target-extension",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Extension to support the MyST target syntax (`(name)=`) in unified",
     "license": "MIT",
     "author": "Chris Sewell <https://github.com/chrisjsewell>",
