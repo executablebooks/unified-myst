@@ -59,11 +59,11 @@ function tokenizeMystComment(effects, ok) {
         effects.enter(types.chunkString, {
             contentType: constants.contentTypeString,
         })
-        return insideContent(code)
+        return consumeContent(code)
     }
 
     /** @type {State} */
-    function insideContent(code) {
+    function consumeContent(code) {
         if (code === codes.eof) {
             effects.exit(types.chunkString)
             return finalise(code)
@@ -76,7 +76,7 @@ function tokenizeMystComment(effects, ok) {
 
         // Consume content of the comment
         effects.consume(code)
-        return insideContent
+        return consumeContent
     }
 
     /** @type {State} */

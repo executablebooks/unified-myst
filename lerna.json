@@ -4,6 +4,7 @@
     "command": {
         "publish": {
             "allowBranch": "main",
+            "ignoreChanges": ["*.md", "tests/**/*"],
             "message": "🚀 RELEASE"
         }
     }

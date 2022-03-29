@@ -47,6 +47,12 @@ exports[`Convert source to HTML "% abc\\nd" 1`] = `
 
 exports[`Convert source to HTML "%" 1`] = `"<!--  -->"`;
 
+exports[`Convert source to HTML "> % a\\n> % b" 1`] = `
+"<blockquote><!-- a
+ b -->
+</blockquote>"
+`;
+
 exports[`Convert source to HTML "- a\\n% b" 1`] = `
 "<ul>
 <li>a</li>

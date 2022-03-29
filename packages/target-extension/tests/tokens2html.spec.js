@@ -11,6 +11,7 @@ const fixtures = [
     '(a bc)=',
     String.raw`(ab\\c)=`,
     '(abc)= d',
+    '> (abc)=',
 ]
 
 describe('Convert source to HTML', () => {

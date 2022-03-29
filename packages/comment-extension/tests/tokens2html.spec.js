@@ -16,6 +16,7 @@ const fixtures = [
     '% abc\n% def',
     '% abc\n\n% def',
     '% abc\n%\n% def',
+    '> % a\n> % b',
 ]
 
 describe('Convert source to HTML', () => {

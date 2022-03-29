@@ -15,3 +15,8 @@ exports[`Convert source to HTML "(abc)= " 1`] = `"<a class=\\"anchor\\" id=\\"ab
 exports[`Convert source to HTML "(abc)= d" 1`] = `"<p>(abc)= d</p>"`;
 
 exports[`Convert source to HTML "(abc)=" 1`] = `"<a class=\\"anchor\\" id=\\"abc\\" href=\\"#abc\\">🔗</a>"`;
+
+exports[`Convert source to HTML "> (abc)=" 1`] = `
+"<blockquote><a class=\\"anchor\\" id=\\"abc\\" href=\\"#abc\\">🔗</a>
+</blockquote>"
+`;

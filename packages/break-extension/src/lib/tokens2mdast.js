@@ -2,42 +2,42 @@
  * @typedef {import('mdast-util-from-markdown').Extension} FromMarkdownExtension
  * @typedef {import('mdast-util-from-markdown').Handle} FromMarkdownHandle
  *
- * @typedef {any} MystCommentNode
- *   mdast node type for mystComment
+ * @typedef {any} MystBreakNode
+ *   mdast node type for mystBreak
  */
 
-// TODO how to properly define the MystCommentNode with JSDoc?
+// TODO how to properly define the MystBreakNode with JSDoc?
 
 import { tokenTypes } from './constants.js'
 
 /**
- * The MDAST extension, to convert mystComment tokens to MDAST nodes.
+ * The MDAST extension, to convert mystBreak tokens to MDAST nodes.
  * @type {FromMarkdownExtension}
  */
-export const mystCommentMdastExt = {
+export const mystBreakMdastExt = {
     enter: {
-        [tokenTypes.mystComment]: enterMystComment,
+        [tokenTypes.mystBreak]: enterMystBreak,
     },
     exit: {
-        [tokenTypes.mystComment]: exitMystComment,
+        [tokenTypes.mystBreak]: exitMystBreak,
     },
 }
 
 /**
  * @type {FromMarkdownHandle}
  */
-function enterMystComment(token) {
-    this.enter(/** @type {MystCommentNode} */ ({ type: 'mystComment' }), token)
+function enterMystBreak(token) {
+    this.enter(/** @type {MystBreakNode} */ ({ type: 'mystBreak' }), token)
     this.buffer()
 }
 
 /**
  * @type {FromMarkdownHandle}
  */
-function exitMystComment(token) {
+function exitMystBreak(token) {
     const data = this.resume()
     const node = this.stack[this.stack.length - 1]
     // @ts-ignore
-    node.value = data
+    node.meta = data
     this.exit(token)
 }

@@ -27,7 +27,7 @@ export const mystTargetMdastExt = {
  * @type {FromMarkdownHandle}
  */
 function enterMystTarget(token) {
-    this.enter(/** @type {MystTargetNode} */ ({ type: 'target' }), token)
+    this.enter(/** @type {MystTargetNode} */ ({ type: 'mystTarget' }), token)
     this.buffer()
 }
 

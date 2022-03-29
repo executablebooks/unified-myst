@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Convert source to HTML "+" 1`] = `
+"<ul>
+<li></li>
+</ul>"
+`;
+
+exports[`Convert source to HTML "+++ {\\"key\\": \\"value\\"}" 1`] = `"<hr class=\\"myst-break\\"/>"`;
+
+exports[`Convert source to HTML "+++" 1`] = `"<hr class=\\"myst-break\\"/>"`;
+
+exports[`Convert source to HTML "+++\\n" 1`] = `
+"<hr class=\\"myst-break\\"/>
+"
+`;
+
+exports[`Convert source to HTML "+++\\na" 1`] = `
+"<hr class=\\"myst-break\\"/>
+<p>a</p>"
+`;
+
+exports[`Convert source to HTML "+++{}" 1`] = `"<hr class=\\"myst-break\\"/>"`;
+
+exports[`Convert source to HTML "+++{}\\n" 1`] = `
+"<hr class=\\"myst-break\\"/>
+"
+`;

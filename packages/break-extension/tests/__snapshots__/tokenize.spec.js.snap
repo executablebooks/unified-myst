@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Convert source to tokens "+" 1`] = `
+Array [
+  Array [
+    "enter",
+    "listUnordered",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "enter",
+    "listItemPrefix",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "enter",
+    "listItemMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "exit",
+    "listItemMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "exit",
+    "listItemPrefix",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "exit",
+    "listUnordered",
+    "1.1",
+    "1.2",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "+++ {\\"key\\": \\"value\\"}" 1`] = `
+Array [
+  Array [
+    "enter",
+    "mystTarget",
+    "1.1",
+    "1.21",
+  ],
+  Array [
+    "enter",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "whitespace",
+    "1.4",
+    "1.5",
+  ],
+  Array [
+    "exit",
+    "whitespace",
+    "1.4",
+    "1.5",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.5",
+    "1.21",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.5",
+    "1.21",
+  ],
+  Array [
+    "exit",
+    "mystTarget",
+    "1.1",
+    "1.21",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "+++" 1`] = `
+Array [
+  Array [
+    "enter",
+    "mystTarget",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "mystTarget",
+    "1.1",
+    "1.4",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "+++\\n" 1`] = `
+Array [
+  Array [
+    "enter",
+    "mystTarget",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "mystTarget",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "lineEnding",
+    "1.4",
+    "2.1",
+  ],
+  Array [
+    "exit",
+    "lineEnding",
+    "1.4",
+    "2.1",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "+++{}" 1`] = `
+Array [
+  Array [
+    "enter",
+    "mystTarget",
+    "1.1",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.4",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.4",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "mystTarget",
+    "1.1",
+    "1.6",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "+++{}\\n" 1`] = `
+Array [
+  Array [
+    "enter",
+    "mystTarget",
+    "1.1",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "mystTargetMarker",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.4",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.4",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "mystTarget",
+    "1.1",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "lineEnding",
+    "1.6",
+    "2.1",
+  ],
+  Array [
+    "exit",
+    "lineEnding",
+    "1.6",
+    "2.1",
+  ],
+]
+`;

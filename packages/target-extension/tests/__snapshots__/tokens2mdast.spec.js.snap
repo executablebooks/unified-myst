@@ -17,7 +17,7 @@ Object {
           "offset": 1,
         },
       },
-      "type": "target",
+      "type": "mystTarget",
     },
   ],
   "position": Object {
@@ -53,7 +53,7 @@ Object {
           "offset": 0,
         },
       },
-      "type": "target",
+      "type": "mystTarget",
     },
   ],
   "position": Object {
@@ -89,7 +89,7 @@ Object {
           "offset": 0,
         },
       },
-      "type": "target",
+      "type": "mystTarget",
     },
   ],
   "position": Object {
@@ -125,7 +125,7 @@ Object {
           "offset": 0,
         },
       },
-      "type": "target",
+      "type": "mystTarget",
     },
   ],
   "position": Object {
@@ -161,7 +161,7 @@ Object {
           "offset": 0,
         },
       },
-      "type": "target",
+      "type": "mystTarget",
     },
   ],
   "position": Object {
