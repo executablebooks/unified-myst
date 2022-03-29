@@ -4,6 +4,7 @@
     "description": "Extension to support the MyST comment syntax (`% comment`) in unified",
     "license": "MIT",
     "author": "Chris Sewell <https://github.com/chrisjsewell>",
+    "homepage": "https://github.com/executablebooks/unified-myst",
     "keywords": [
         "myst",
         "unified",
@@ -41,6 +42,7 @@
         "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js"
     },
     "dependencies": {
+        "micromark-factory-space": "^1.0.0",
         "micromark-util-character": "^1.1.0"
     },
     "peerDependencies": {

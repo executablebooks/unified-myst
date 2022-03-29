@@ -1,14 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Convert source to HTML " % a\\n%b\\n %c" 1`] = `
+"<!-- a
+b
+c -->"
+`;
+
+exports[`Convert source to HTML " %" 1`] = `"<!--  -->"`;
+
 exports[`Convert source to HTML "% " 1`] = `"<!--  -->"`;
 
 exports[`Convert source to HTML "% &" 1`] = `"<!-- &amp;amp; -->"`;
 
 exports[`Convert source to HTML "% abc" 1`] = `"<!-- abc -->"`;
 
+exports[`Convert source to HTML "% abc\\n " 1`] = `
+"<!-- abc -->
+"
+`;
+
+exports[`Convert source to HTML "% abc\\n" 1`] = `
+"<!-- abc -->
+"
+`;
+
 exports[`Convert source to HTML "% abc\\n% def" 1`] = `
+"<!-- abc
+ def -->"
+`;
+
+exports[`Convert source to HTML "% abc\\n%\\n% def" 1`] = `
+"<!-- abc
+
+ def -->"
+`;
+
+exports[`Convert source to HTML "% abc\\n\\n% def" 1`] = `
 "<!-- abc -->
 <!-- def -->"
+`;
+
+exports[`Convert source to HTML "% abc\\nd" 1`] = `
+"<!-- abc -->
+<p>d</p>"
 `;
 
 exports[`Convert source to HTML "%" 1`] = `"<!--  -->"`;

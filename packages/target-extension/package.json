@@ -4,6 +4,7 @@
     "description": "Extension to support the MyST target syntax (`(name)=`) in unified",
     "license": "MIT",
     "author": "Chris Sewell <https://github.com/chrisjsewell>",
+    "homepage": "https://github.com/executablebooks/unified-myst",
     "keywords": [
         "myst",
         "unified",

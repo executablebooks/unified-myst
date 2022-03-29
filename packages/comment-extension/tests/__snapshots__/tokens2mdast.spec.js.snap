@@ -79,8 +79,8 @@ Object {
       "position": Object {
         "end": Object {
           "column": 6,
-          "line": 1,
-          "offset": 5,
+          "line": 2,
+          "offset": 11,
         },
         "start": Object {
           "column": 1,
@@ -89,23 +89,8 @@ Object {
         },
       },
       "type": "comment",
-      "value": " abc",
-    },
-    Object {
-      "position": Object {
-        "end": Object {
-          "column": 6,
-          "line": 2,
-          "offset": 11,
-        },
-        "start": Object {
-          "column": 1,
-          "line": 2,
-          "offset": 6,
-        },
-      },
-      "type": "comment",
-      "value": " def",
+      "value": " abc
+ def",
     },
   ],
   "position": Object {
@@ -113,6 +98,44 @@ Object {
       "column": 6,
       "line": 2,
       "offset": 11,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`Convert source to MDAST "% abc\\n%\\n% def" 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "position": Object {
+        "end": Object {
+          "column": 6,
+          "line": 3,
+          "offset": 13,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "comment",
+      "value": " abc
+
+ def",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 6,
+      "line": 3,
+      "offset": 13,
     },
     "start": Object {
       "column": 1,

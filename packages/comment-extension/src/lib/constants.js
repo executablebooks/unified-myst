@@ -5,5 +5,4 @@
 export const tokenTypes = {
     mystComment: 'mystComment',
     mystCommentMarker: 'mystCommentMarker',
-    mystCommentString: 'mystCommentString',
 }

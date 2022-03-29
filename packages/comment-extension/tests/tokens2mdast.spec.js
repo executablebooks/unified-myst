@@ -2,7 +2,7 @@ import { fromMarkdown } from 'mdast-util-from-markdown'
 
 import { mystCommentMmarkExt, mystCommentMdastExt } from '../src/index.js'
 
-const fixtures = ['%', '% ', '% abc', '% abc\n% def']
+const fixtures = ['%', '% ', '% abc', '% abc\n% def', '% abc\n%\n% def']
 
 describe('Convert source to MDAST', () => {
     test.each(fixtures)(`%j`, (content) => {

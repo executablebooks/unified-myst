@@ -4,7 +4,14 @@ import { preprocess } from 'micromark/lib/preprocess'
 
 import { mystCommentMmarkExt } from '../src/index.js'
 
-const fixtures = ['%', '% ', '% abc', '% abc\n% def']
+const fixtures = [
+    '%',
+    '% ',
+    '% abc',
+    '% abc\n%',
+    '% abc\n% def',
+    '% abc\n%\n% def',
+]
 
 describe('Convert source to tokens', () => {
     test.each(fixtures)(`%j`, (content) => {

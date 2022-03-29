@@ -1,6 +1,7 @@
 {
     "private": true,
     "name": "unified-myst",
+    "homepage": "https://github.com/executablebooks/unified-myst",
     "version": "0.0.0",
     "description": "",
     "license": "MIT",

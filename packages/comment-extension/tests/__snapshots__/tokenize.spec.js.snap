@@ -88,7 +88,7 @@ Array [
     "enter",
     "mystComment",
     "1.1",
-    "1.6",
+    "2.6",
   ],
   Array [
     "enter",
@@ -112,12 +112,6 @@ Array [
     "exit",
     "data",
     "1.2",
-    "1.6",
-  ],
-  Array [
-    "exit",
-    "mystComment",
-    "1.1",
     "1.6",
   ],
   Array [
@@ -134,12 +128,6 @@ Array [
   ],
   Array [
     "enter",
-    "mystComment",
-    "2.1",
-    "2.6",
-  ],
-  Array [
-    "enter",
     "mystCommentMarker",
     "2.1",
     "2.2",
@@ -165,8 +153,174 @@ Array [
   Array [
     "exit",
     "mystComment",
-    "2.1",
+    "1.1",
     "2.6",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "% abc\\n%" 1`] = `
+Array [
+  Array [
+    "enter",
+    "mystComment",
+    "1.1",
+    "2.2",
+  ],
+  Array [
+    "enter",
+    "mystCommentMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "exit",
+    "mystCommentMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.2",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.2",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "lineEnding",
+    "1.6",
+    "2.1",
+  ],
+  Array [
+    "exit",
+    "lineEnding",
+    "1.6",
+    "2.1",
+  ],
+  Array [
+    "enter",
+    "mystCommentMarker",
+    "2.1",
+    "2.2",
+  ],
+  Array [
+    "exit",
+    "mystCommentMarker",
+    "2.1",
+    "2.2",
+  ],
+  Array [
+    "exit",
+    "mystComment",
+    "1.1",
+    "2.2",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "% abc\\n%\\n% def" 1`] = `
+Array [
+  Array [
+    "enter",
+    "mystComment",
+    "1.1",
+    "3.6",
+  ],
+  Array [
+    "enter",
+    "mystCommentMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "exit",
+    "mystCommentMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.2",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.2",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "lineEnding",
+    "1.6",
+    "2.1",
+  ],
+  Array [
+    "exit",
+    "lineEnding",
+    "1.6",
+    "2.1",
+  ],
+  Array [
+    "enter",
+    "mystCommentMarker",
+    "2.1",
+    "2.2",
+  ],
+  Array [
+    "exit",
+    "mystCommentMarker",
+    "2.1",
+    "2.2",
+  ],
+  Array [
+    "enter",
+    "lineEnding",
+    "2.2",
+    "3.1",
+  ],
+  Array [
+    "exit",
+    "lineEnding",
+    "2.2",
+    "3.1",
+  ],
+  Array [
+    "enter",
+    "mystCommentMarker",
+    "3.1",
+    "3.2",
+  ],
+  Array [
+    "exit",
+    "mystCommentMarker",
+    "3.1",
+    "3.2",
+  ],
+  Array [
+    "enter",
+    "data",
+    "3.2",
+    "3.6",
+  ],
+  Array [
+    "exit",
+    "data",
+    "3.2",
+    "3.6",
+  ],
+  Array [
+    "exit",
+    "mystComment",
+    "1.1",
+    "3.6",
   ],
 ]
 `;

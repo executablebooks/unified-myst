@@ -38,7 +38,7 @@ export default [
         // Build for use as a node module
         input: 'src/index.js',
         plugins: [babelPlugin],
-        external: ['micromark-util-character'],
+        external: ['micromark-factory-space', 'micromark-util-character'],
         output: {
             dir: 'dist/module',
             format: 'esm',

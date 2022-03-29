@@ -1,9 +1,11 @@
 /**
+ * @typedef {import('micromark-util-types').Construct} Construct
  * @typedef {import('micromark-util-types').Extension} Extension
  * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
  * @typedef {import('micromark-util-types').State} State
  */
 
+import { factorySpace } from 'micromark-factory-space'
 import { markdownLineEnding } from 'micromark-util-character'
 import { codes } from 'micromark-util-symbol/codes.js'
 import { constants } from 'micromark-util-symbol/constants.js'
@@ -21,13 +23,16 @@ export const mystCommentMmarkExt = {
     flow: {
         [codes.percentSign]: {
             name: 'mystComment',
-            tokenize: mystCommentTokenize,
+            tokenize: tokenizeMystComment,
         },
     },
 }
 
+/** @type {Construct} */
+const nextLine = { tokenize: tokenizeNextLine, partial: true }
+
 /** @type {Tokenizer} */
-function mystCommentTokenize(effects, ok) {
+function tokenizeMystComment(effects, ok) {
     return start
 
     /** @type {State} */
@@ -42,28 +47,71 @@ function mystCommentTokenize(effects, ok) {
 
     /** @type {State} */
     function afterMarker(code) {
-        if (code === codes.eof || markdownLineEnding(code)) {
-            effects.exit(tokenTypes.mystComment)
-            return ok(code)
+        if (code === codes.eof) {
+            return finalise(code)
         }
 
-        // Anything else: allow character references and escapes.
+        if (markdownLineEnding(code)) {
+            return effects.attempt(nextLine, afterMarker, finalise)
+        }
+
+        // start parsing the content of the comment
         effects.enter(types.chunkString, {
             contentType: constants.contentTypeString,
         })
-        return insideValue(code)
+        return insideContent(code)
     }
 
     /** @type {State} */
-    function insideValue(code) {
-        if (code === codes.eof || markdownLineEnding(code)) {
+    function insideContent(code) {
+        if (code === codes.eof) {
             effects.exit(types.chunkString)
-            effects.exit(tokenTypes.mystComment)
-            return ok(code)
+            return finalise(code)
         }
 
-        // Anything else.
+        if (markdownLineEnding(code)) {
+            effects.exit(types.chunkString)
+            return effects.attempt(nextLine, afterMarker, finalise)
+        }
+
+        // Consume content of the comment
         effects.consume(code)
-        return insideValue
+        return insideContent
+    }
+
+    /** @type {State} */
+    function finalise(code) {
+        effects.exit(tokenTypes.mystComment)
+        return ok(code)
+    }
+}
+
+/** @type {Tokenizer} */
+function tokenizeNextLine(effects, ok, nok) {
+    return lineEnd
+
+    /** @type {State} */
+    function lineEnd(code) {
+        // Consume the previous line ending, then allow for up to three spaces
+        effects.enter(types.lineEnding)
+        effects.consume(code)
+        effects.exit(types.lineEnding)
+        return factorySpace(
+            effects,
+            afterPrefix,
+            types.linePrefix,
+            constants.tabSize - 1
+        )
+    }
+
+    /** @type {State} */
+    function afterPrefix(code) {
+        if (code !== codes.percentSign) {
+            return nok(code)
+        }
+        effects.enter(tokenTypes.mystCommentMarker)
+        effects.consume(code)
+        effects.exit(tokenTypes.mystCommentMarker)
+        return ok(code)
     }
 }
