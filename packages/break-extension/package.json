@@ -1,6 +1,6 @@
 {
     "name": "@unified-myst/break-extension",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Extension to support the MyST block break syntax (`+++ {}`) in unified",
     "license": "MIT",
     "author": "Chris Sewell <https://github.com/chrisjsewell>",
