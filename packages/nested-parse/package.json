@@ -1,6 +1,6 @@
 {
     "name": "@unified-myst/nested-parse",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "Utility for nested parsing of Markdown text",
     "license": "MIT",
     "author": "Chris Sewell <chrisj_sewell@hotmail.com>",

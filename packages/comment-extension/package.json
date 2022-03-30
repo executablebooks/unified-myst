@@ -1,6 +1,6 @@
 {
     "name": "@unified-myst/comment-extension",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "Extension to support the MyST comment syntax (`% comment`) in unified",
     "license": "MIT",
     "author": "Chris Sewell <https://github.com/chrisjsewell>",
