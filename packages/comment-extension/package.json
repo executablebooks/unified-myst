@@ -4,7 +4,14 @@
     "description": "Extension to support the MyST comment syntax (`% comment`) in unified",
     "license": "MIT",
     "author": "Chris Sewell <https://github.com/chrisjsewell>",
-    "homepage": "https://github.com/executablebooks/unified-myst",
+    "homepage": "https://github.com/executablebooks/unified-myst/tree/main/packages/comment-extension#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/executablebooks/unified-myst.git"
+    },
+    "bugs": {
+        "url": "https://github.com/executablebooks/unified-myst/issues"
+    },
     "keywords": [
         "myst",
         "unified",
