@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Convert source to HTML "{ }" 1`] = `"<p>{ }</p>"`;
+
+exports[`Convert source to HTML "{ }\`content\`" 1`] = `"<p>{ }<code>content</code></p>"`;
+
+exports[`Convert source to HTML "{ a}\`content\`" 1`] = `"<p>{ a}<code>content</code></p>"`;
+
+exports[`Convert source to HTML "{}" 1`] = `"<p>{}</p>"`;
+
+exports[`Convert source to HTML "{}\`content\`" 1`] = `"<p>{}<code>content</code></p>"`;
+
+exports[`Convert source to HTML "{name} \`content\`" 1`] = `"<p>{name} <code>content</code></p>"`;
+
+exports[`Convert source to HTML "{name}" 1`] = `"<p>{name}</p>"`;
+
+exports[`Convert source to HTML "{name}\`" 1`] = `"<p>{name}\`</p>"`;
+
+exports[`Convert source to HTML "{name}\`content\`" 1`] = `"<p><span class=\\"myst-role\\">name<code>content</code></span></p>"`;

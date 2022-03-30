@@ -1,0 +1,658 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Convert source to tokens "{ }" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.4",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "{ }\`content\`" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.13",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.13",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "codeText",
+    "1.4",
+    "1.13",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.4",
+    "1.5",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.4",
+    "1.5",
+  ],
+  Array [
+    "enter",
+    "codeTextData",
+    "1.5",
+    "1.12",
+  ],
+  Array [
+    "exit",
+    "codeTextData",
+    "1.5",
+    "1.12",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.12",
+    "1.13",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.12",
+    "1.13",
+  ],
+  Array [
+    "exit",
+    "codeText",
+    "1.4",
+    "1.13",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.13",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.13",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "{ a}\`content\`" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.14",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.14",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.5",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.5",
+  ],
+  Array [
+    "enter",
+    "codeText",
+    "1.5",
+    "1.14",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.5",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.5",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "codeTextData",
+    "1.6",
+    "1.13",
+  ],
+  Array [
+    "exit",
+    "codeTextData",
+    "1.6",
+    "1.13",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.13",
+    "1.14",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.13",
+    "1.14",
+  ],
+  Array [
+    "exit",
+    "codeText",
+    "1.5",
+    "1.14",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.14",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.14",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "{}" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.3",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.3",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.3",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.3",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.3",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.3",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "{}\`content\`" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.12",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.12",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.3",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.3",
+  ],
+  Array [
+    "enter",
+    "codeText",
+    "1.3",
+    "1.12",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.3",
+    "1.4",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.3",
+    "1.4",
+  ],
+  Array [
+    "enter",
+    "codeTextData",
+    "1.4",
+    "1.11",
+  ],
+  Array [
+    "exit",
+    "codeTextData",
+    "1.4",
+    "1.11",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.11",
+    "1.12",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.11",
+    "1.12",
+  ],
+  Array [
+    "exit",
+    "codeText",
+    "1.3",
+    "1.12",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.12",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.12",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "{name} \`content\`" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.17",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.17",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.8",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.8",
+  ],
+  Array [
+    "enter",
+    "codeText",
+    "1.8",
+    "1.17",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.8",
+    "1.9",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.8",
+    "1.9",
+  ],
+  Array [
+    "enter",
+    "codeTextData",
+    "1.9",
+    "1.16",
+  ],
+  Array [
+    "exit",
+    "codeTextData",
+    "1.9",
+    "1.16",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.16",
+    "1.17",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.16",
+    "1.17",
+  ],
+  Array [
+    "exit",
+    "codeText",
+    "1.8",
+    "1.17",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.17",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.17",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "{name}" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.7",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.7",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.7",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.7",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.7",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.7",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "{name}\`" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.8",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.8",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.1",
+    "1.8",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.1",
+    "1.8",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.8",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.8",
+  ],
+]
+`;
+
+exports[`Convert source to tokens "{name}\`content\`" 1`] = `
+Array [
+  Array [
+    "enter",
+    "content",
+    "1.1",
+    "1.16",
+  ],
+  Array [
+    "enter",
+    "paragraph",
+    "1.1",
+    "1.16",
+  ],
+  Array [
+    "enter",
+    "mystRole",
+    "1.1",
+    "1.16",
+  ],
+  Array [
+    "enter",
+    "mystRoleMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "exit",
+    "mystRoleMarker",
+    "1.1",
+    "1.2",
+  ],
+  Array [
+    "enter",
+    "mystRoleName",
+    "1.2",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "data",
+    "1.2",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "data",
+    "1.2",
+    "1.6",
+  ],
+  Array [
+    "exit",
+    "mystRoleName",
+    "1.2",
+    "1.6",
+  ],
+  Array [
+    "enter",
+    "mystRoleMarker",
+    "1.6",
+    "1.7",
+  ],
+  Array [
+    "exit",
+    "mystRoleMarker",
+    "1.6",
+    "1.7",
+  ],
+  Array [
+    "enter",
+    "codeText",
+    "1.7",
+    "1.16",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.7",
+    "1.8",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.7",
+    "1.8",
+  ],
+  Array [
+    "enter",
+    "codeTextData",
+    "1.8",
+    "1.15",
+  ],
+  Array [
+    "exit",
+    "codeTextData",
+    "1.8",
+    "1.15",
+  ],
+  Array [
+    "enter",
+    "codeTextSequence",
+    "1.15",
+    "1.16",
+  ],
+  Array [
+    "exit",
+    "codeTextSequence",
+    "1.15",
+    "1.16",
+  ],
+  Array [
+    "exit",
+    "codeText",
+    "1.7",
+    "1.16",
+  ],
+  Array [
+    "exit",
+    "mystRole",
+    "1.1",
+    "1.16",
+  ],
+  Array [
+    "exit",
+    "paragraph",
+    "1.1",
+    "1.16",
+  ],
+  Array [
+    "exit",
+    "content",
+    "1.1",
+    "1.16",
+  ],
+]
+`;

@@ -44,11 +44,11 @@ function mystTargetTokenize(effects, ok, nok) {
         effects.consume(code)
         effects.exit(tokenTypes.mystTargetMarker)
         effects.enter(tokenTypes.mystTargetString)
-        return atBreak
+        return afterOpen
     }
 
     /** @type {State} */
-    function atBreak(code) {
+    function afterOpen(code) {
         if (
             code === codes.eof ||
             markdownLineEnding(code) ||
@@ -68,11 +68,11 @@ function mystTargetTokenize(effects, ok, nok) {
         effects.enter(types.chunkString, {
             contentType: constants.contentTypeString,
         })
-        return label(code)
+        return consumeLabel(code)
     }
 
     /** @type {State} */
-    function label(code) {
+    function consumeLabel(code) {
         if (
             code === codes.eof ||
             code === codes.rightParenthesis ||
@@ -80,21 +80,21 @@ function mystTargetTokenize(effects, ok, nok) {
             // TODO max size?
         ) {
             effects.exit(types.chunkString)
-            return atBreak(code)
+            return afterOpen(code)
         }
 
         effects.consume(code)
         data = data || !markdownSpace(code)
-        return code === codes.backslash ? labelEscape : label
+        return code === codes.backslash ? labelEscape : consumeLabel
     }
 
     /** @type {State} */
     function labelEscape(code) {
         if (code === codes.backslash || code === codes.rightParenthesis) {
             effects.consume(code)
-            return label
+            return consumeLabel
         }
-        return label(code)
+        return consumeLabel(code)
     }
 
     /**

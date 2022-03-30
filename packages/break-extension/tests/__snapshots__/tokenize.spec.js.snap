@@ -45,19 +45,19 @@ exports[`Convert source to tokens "+++ {\\"key\\": \\"value\\"}" 1`] = `
 Array [
   Array [
     "enter",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.21",
   ],
   Array [
     "enter",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
   Array [
     "exit",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
@@ -87,7 +87,7 @@ Array [
   ],
   Array [
     "exit",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.21",
   ],
@@ -98,25 +98,25 @@ exports[`Convert source to tokens "+++" 1`] = `
 Array [
   Array [
     "enter",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.4",
   ],
   Array [
     "enter",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
   Array [
     "exit",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
   Array [
     "exit",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.4",
   ],
@@ -127,25 +127,25 @@ exports[`Convert source to tokens "+++\\n" 1`] = `
 Array [
   Array [
     "enter",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.4",
   ],
   Array [
     "enter",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
   Array [
     "exit",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
   Array [
     "exit",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.4",
   ],
@@ -168,19 +168,19 @@ exports[`Convert source to tokens "+++{}" 1`] = `
 Array [
   Array [
     "enter",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.6",
   ],
   Array [
     "enter",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
   Array [
     "exit",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
@@ -198,7 +198,7 @@ Array [
   ],
   Array [
     "exit",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.6",
   ],
@@ -209,19 +209,19 @@ exports[`Convert source to tokens "+++{}\\n" 1`] = `
 Array [
   Array [
     "enter",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.6",
   ],
   Array [
     "enter",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
   Array [
     "exit",
-    "mystTargetMarker",
+    "mystBreakMarker",
     "1.1",
     "1.4",
   ],
@@ -239,7 +239,7 @@ Array [
   ],
   Array [
     "exit",
-    "mystTarget",
+    "mystBreak",
     "1.1",
     "1.6",
   ],

@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Convert source to MDAST "{name}\`content\`" 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "content": "content",
+          "name": "name",
+          "position": Object {
+            "end": Object {
+              "column": 16,
+              "line": 1,
+              "offset": 15,
+            },
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "mystRole",
+        },
+      ],
+      "position": Object {
+        "end": Object {
+          "column": 16,
+          "line": 1,
+          "offset": 15,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 16,
+      "line": 1,
+      "offset": 15,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`Convert source to MDAST "{name}\`multi\\nline\`\\n" 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "content": "multi
+line",
+          "name": "name",
+          "position": Object {
+            "end": Object {
+              "column": 6,
+              "line": 2,
+              "offset": 18,
+            },
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "mystRole",
+        },
+      ],
+      "position": Object {
+        "end": Object {
+          "column": 6,
+          "line": 2,
+          "offset": 18,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 1,
+      "line": 3,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;

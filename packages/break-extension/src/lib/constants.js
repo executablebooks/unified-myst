@@ -3,7 +3,6 @@
  */
 
 export const tokenTypes = {
-    mystBreak: 'mystTarget',
-    mystBreakMarker: 'mystTargetMarker',
-    mystBreakString: 'mystTargetString',
+    mystBreak: 'mystBreak',
+    mystBreakMarker: 'mystBreakMarker',
 }
