@@ -1,0 +1,318 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parse block text "[a]: b" 1`] = `
+Array [
+  Object {
+    "identifier": "a",
+    "label": "a",
+    "position": Object {
+      "end": Object {
+        "column": 7,
+        "line": 1,
+        "offset": 6,
+      },
+      "start": Object {
+        "column": 1,
+        "line": 1,
+        "offset": 0,
+      },
+    },
+    "title": null,
+    "type": "definition",
+    "url": "b",
+  },
+]
+`;
+
+exports[`Parse block text "- a" 1`] = `
+Array [
+  Object {
+    "children": Array [
+      Object {
+        "checked": null,
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "position": Object {
+                  "end": Object {
+                    "column": 4,
+                    "line": 1,
+                    "offset": 3,
+                  },
+                  "start": Object {
+                    "column": 3,
+                    "line": 1,
+                    "offset": 2,
+                  },
+                },
+                "type": "text",
+                "value": "a",
+              },
+            ],
+            "position": Object {
+              "end": Object {
+                "column": 4,
+                "line": 1,
+                "offset": 3,
+              },
+              "start": Object {
+                "column": 3,
+                "line": 1,
+                "offset": 2,
+              },
+            },
+            "type": "paragraph",
+          },
+        ],
+        "position": Object {
+          "end": Object {
+            "column": 4,
+            "line": 1,
+            "offset": 3,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "spread": false,
+        "type": "listItem",
+      },
+    ],
+    "ordered": false,
+    "position": Object {
+      "end": Object {
+        "column": 4,
+        "line": 1,
+        "offset": 3,
+      },
+      "start": Object {
+        "column": 1,
+        "line": 1,
+        "offset": 0,
+      },
+    },
+    "spread": false,
+    "start": null,
+    "type": "list",
+  },
+]
+`;
+
+exports[`Parse block text "a" 1`] = `
+Array [
+  Object {
+    "children": Array [
+      Object {
+        "position": Object {
+          "end": Object {
+            "column": 2,
+            "line": 1,
+            "offset": 1,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "type": "text",
+        "value": "a",
+      },
+    ],
+    "position": Object {
+      "end": Object {
+        "column": 2,
+        "line": 1,
+        "offset": 1,
+      },
+      "start": Object {
+        "column": 1,
+        "line": 1,
+        "offset": 0,
+      },
+    },
+    "type": "paragraph",
+  },
+]
+`;
+
+exports[`Parse inline text "- a" 1`] = `
+Array [
+  Object {
+    "position": Object {
+      "end": Object {
+        "column": 4,
+        "line": 1,
+        "offset": 3,
+      },
+      "start": Object {
+        "column": 1,
+        "line": 1,
+        "offset": 0,
+      },
+    },
+    "type": "text",
+    "value": "- a",
+  },
+]
+`;
+
+exports[`Parse inline text "a" 1`] = `
+Array [
+  Object {
+    "position": Object {
+      "end": Object {
+        "column": 2,
+        "line": 1,
+        "offset": 1,
+      },
+      "start": Object {
+        "column": 1,
+        "line": 1,
+        "offset": 0,
+      },
+    },
+    "type": "text",
+    "value": "a",
+  },
+]
+`;
+
+exports[`Parse strip position block 1`] = `
+Array [
+  Object {
+    "children": Array [
+      Object {
+        "type": "text",
+        "value": "a",
+      },
+    ],
+    "type": "paragraph",
+  },
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "type": "text",
+            "value": "b",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "type": "blockquote",
+  },
+]
+`;
+
+exports[`Parse strip position inline 1`] = `
+Array [
+  Object {
+    "type": "text",
+    "value": "a
+b",
+  },
+]
+`;
+
+exports[`Parse with offsets block 1`] = `
+Array [
+  Object {
+    "children": Array [
+      Object {
+        "position": Object {
+          "end": Object {
+            "column": 5,
+            "line": 3,
+          },
+          "start": Object {
+            "column": 4,
+            "line": 3,
+          },
+        },
+        "type": "text",
+        "value": "a",
+      },
+    ],
+    "position": Object {
+      "end": Object {
+        "column": 5,
+        "line": 3,
+      },
+      "start": Object {
+        "column": 4,
+        "line": 3,
+      },
+    },
+    "type": "paragraph",
+  },
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "position": Object {
+              "end": Object {
+                "column": 7,
+                "line": 4,
+              },
+              "start": Object {
+                "column": 6,
+                "line": 4,
+              },
+            },
+            "type": "text",
+            "value": "b",
+          },
+        ],
+        "position": Object {
+          "end": Object {
+            "column": 7,
+            "line": 4,
+          },
+          "start": Object {
+            "column": 6,
+            "line": 4,
+          },
+        },
+        "type": "paragraph",
+      },
+    ],
+    "position": Object {
+      "end": Object {
+        "column": 7,
+        "line": 4,
+      },
+      "start": Object {
+        "column": 4,
+        "line": 4,
+      },
+    },
+    "type": "blockquote",
+  },
+]
+`;
+
+exports[`Parse with offsets inline 1`] = `
+Array [
+  Object {
+    "position": Object {
+      "end": Object {
+        "column": 5,
+        "line": 4,
+      },
+      "start": Object {
+        "column": 4,
+        "line": 3,
+      },
+    },
+    "type": "text",
+    "value": "a
+b",
+  },
+]
+`;

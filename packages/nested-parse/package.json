@@ -1,0 +1,61 @@
+{
+    "name": "@unified-myst/nested-parse",
+    "version": "0.0.0",
+    "description": "Utility for nested parsing of Markdown text",
+    "license": "MIT",
+    "author": "Chris Sewell <chrisj_sewell@hotmail.com>",
+    "homepage": "https://github.com/executablebooks/unified-myst/tree/main/packages/nested-parse#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/executablebooks/unified-myst.git"
+    },
+    "bugs": {
+        "url": "https://github.com/executablebooks/unified-myst/issues"
+    },
+    "keywords": [
+        "myst",
+        "mdast",
+        "unified",
+        "micromark"
+    ],
+    "type": "module",
+    "module": "./dist/module/index.js",
+    "types": "./dist/types/index.d.ts",
+    "files": [
+        "src",
+        "dist"
+    ],
+    "exports": {
+        "default": {
+            "import": "./dist/module/index.js"
+        },
+        "development": {
+            "import": "./src/index.js"
+        }
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "clean": "rimraf dist",
+        "build:types": "tsc",
+        "build:bundles": "rollup -c --failAfterWarnings",
+        "build": "npm-run-all -l clean -p build:types build:bundles",
+        "prepublishOnly": "npm run build",
+        "lint:type-cov": "npm run build:types && type-coverage",
+        "lint": "eslint --max-warnings 1 {src,tests}/**/*.js",
+        "lint:fix": "eslint --fix src/**/*.js",
+        "format": "prettier --write \"{src,tests}/**/*.js\"",
+        "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js"
+    },
+    "dependencies": {
+        "mdtoken-to-mdast": "^1.2.0",
+        "micromark": "^3.0.10",
+        "unist-util-visit": "^4.1.0"
+    },
+    "devDependencies": {
+        "@types/mdast": "^3.0.10",
+        "@types/unist": "^2.0.6",
+        "micromark-util-types": "^1.0.2"
+    }
+}
