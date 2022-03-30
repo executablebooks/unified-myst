@@ -1,6 +1,6 @@
 {
     "name": "@unified-myst/role-extension",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "Extension to support the MyST role syntax (``{name}`content` ``) in unified",
     "license": "MIT",
     "author": "Chris Sewell <https://github.com/chrisjsewell>",
