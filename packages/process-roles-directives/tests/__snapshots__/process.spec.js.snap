@@ -1,0 +1,344 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process directives basic 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "meta": "argument",
+      "name": "name",
+      "position": undefined,
+      "type": "mystDirective",
+      "value": "content",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process directives nested 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "meta": "argument",
+          "name": "nested",
+          "position": undefined,
+          "type": "mystDirective",
+          "value": "content",
+        },
+      ],
+      "type": "mystDirective",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process directives nested definition 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "definitions": Set {
+            "test",
+          },
+          "footnotes": Set {},
+          "type": "leaf",
+        },
+        Object {
+          "definitions": Set {
+            "test",
+            "other",
+          },
+          "footnotes": Set {},
+          "type": "mystDirective",
+        },
+        Object {
+          "identifier": "other",
+          "type": "definition",
+        },
+      ],
+      "type": "mystDirective",
+    },
+    Object {
+      "identifier": "test",
+      "type": "definition",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process directives nested footnote 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "definitions": Set {},
+          "footnotes": Set {
+            "test",
+          },
+          "type": "leaf",
+        },
+        Object {
+          "definitions": Set {},
+          "footnotes": Set {
+            "test",
+            "other",
+          },
+          "type": "mystDirective",
+        },
+        Object {
+          "identifier": "other",
+          "type": "footnoteDefinition",
+        },
+      ],
+      "type": "mystDirective",
+    },
+    Object {
+      "identifier": "test",
+      "type": "footnoteDefinition",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process directives null 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "name",
+      "meta": "argument",
+      "type": "code",
+      "value": "content",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process directives role in directive 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "name": "name",
+              "type": "element",
+            },
+          ],
+          "name": "name",
+          "type": "mystRole",
+        },
+      ],
+      "type": "mystDirective",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process roles basic 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "name": "name",
+              "type": "element",
+            },
+          ],
+          "name": "name",
+          "type": "mystRole",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process roles definition 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "definitions": Set {
+                "test",
+              },
+              "name": "name",
+              "type": "element",
+            },
+          ],
+          "name": "name",
+          "type": "mystRole",
+        },
+      ],
+      "type": "paragraph",
+    },
+    Object {
+      "identifier": "test",
+      "type": "definition",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process roles footnote 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "footnotes": Set {
+                "test",
+              },
+              "name": "name",
+              "type": "element",
+            },
+          ],
+          "name": "name",
+          "type": "mystRole",
+        },
+      ],
+      "type": "paragraph",
+    },
+    Object {
+      "identifier": "test",
+      "type": "footnoteDefinition",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process roles multiple 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "name": "name1",
+              "type": "element",
+            },
+          ],
+          "name": "name1",
+          "type": "mystRole",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "name": "name2",
+              "type": "element",
+            },
+          ],
+          "name": "name2",
+          "type": "mystRole",
+        },
+      ],
+      "type": "paragraph",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "name": "name3",
+              "type": "element",
+            },
+          ],
+          "name": "name3",
+          "type": "mystRole",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process roles nested 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "type": "leaf",
+                },
+              ],
+              "name": "nested",
+              "type": "mystRole",
+            },
+          ],
+          "name": "name",
+          "type": "mystRole",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process roles null 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "text",
+          "value": "Hello",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`Process roles pre-processed 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "type": "text",
+              "value": "Hello",
+            },
+          ],
+          "name": "name1",
+          "type": "mystRole",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "root",
+}
+`;

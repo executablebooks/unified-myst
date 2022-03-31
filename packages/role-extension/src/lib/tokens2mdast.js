@@ -11,7 +11,7 @@
 
 // TODO how to properly define the MystRoleNode with JSDoc?
 
-import { tokenTypes } from './constants.js'
+import { tokenTypes, nodeTypes } from './constants.js'
 
 /**
  * The MDAST extension, to convert mystRole tokens to MDAST nodes.
@@ -33,7 +33,10 @@ export const mystRoleMdastExt = {
  */
 function enterMystRole(token) {
     this.enter(
-        /** @type {MystRoleNode} */ ({ type: 'mystRole', children: [] }),
+        /** @type {MystRoleNode} */ ({
+            type: nodeTypes.mystRole,
+            children: [],
+        }),
         token
     )
 }

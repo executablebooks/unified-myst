@@ -7,3 +7,7 @@ export const tokenTypes = {
     mystRoleMarker: 'mystRoleMarker',
     mystRoleName: 'mystRoleName',
 }
+
+export const nodeTypes = {
+    mystRole: 'mystRole',
+}
