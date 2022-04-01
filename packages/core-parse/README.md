@@ -137,6 +137,8 @@ This parsing process and extension mechanism is partially adapted from [docutils
 
 - Best way to namespace names for config etc?
 
-- Errors/Logging (create error node)
+- Add Logging (and create error nodes)
 
 - Errors with node-resolve when trying to build the browser bundle
+
+- Errors with workspace build of types, because of wrong order (since core-parse depends on other packages)
