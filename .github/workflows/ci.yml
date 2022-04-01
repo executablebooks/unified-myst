@@ -80,4 +80,4 @@ jobs:
       - name: Build dependencies
         run: lerna run build --ignore @unified-myst/core-parse
       - name: Build dependents
-          lerna run build --scope @unified-myst/core-parse
+        run: lerna run build --scope @unified-myst/core-parse
