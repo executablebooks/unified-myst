@@ -5,13 +5,19 @@
  * @typedef {import('mdast').FootnoteDefinition} FootnoteDefinition
  * @typedef {import('mdast').Code} Code
  *
+ * @typedef RawRoleNode
+ * @property {string} type
+ * @property {string} name
+ * @property {string} content
+ * @property {Position} [position]
+ *
  * @typedef RawDirectiveNode
  * @property {string} name
  * @property {string} value
  * @property {string?} [meta]
  * @property {Position} [position]
  *
- * @typedef {(node: Node, context: {definitions: Set<string>, footnotes: Set<string>}) => Node[]} roleProcessor
+ * @typedef {(node: RawRoleNode, context: {definitions: Set<string>, footnotes: Set<string>}) => Node[]} roleProcessor
  * @typedef {(node: RawDirectiveNode, context: {definitions: Set<string>, footnotes: Set<string>}) => Node} directiveProcessor
  */
 import { visit, SKIP, CONTINUE } from 'unist-util-visit'
@@ -71,7 +77,10 @@ export function processRolesDirectives(
                 // The role is already processed, so we don't need to do anything
                 return SKIP
             }
-            const children = processRole(node, { definitions, footnotes })
+            /** @type RawRoleNode  */
+            // @ts-ignore
+            const role = node
+            const children = processRole(role, { definitions, footnotes })
             // @ts-ignore
             node.children = children
             // TODO add guard to prevent infinite recursion?

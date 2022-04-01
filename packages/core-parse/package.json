@@ -1,0 +1,75 @@
+{
+    "name": "@unified-myst/core-parse",
+    "version": "0.0.0",
+    "description": "The core entry point for MyST parsing in unified.",
+    "license": "MIT",
+    "author": "Chris Sewell <chrisj_sewell@hotmail.com>",
+    "homepage": "https://github.com/executablebooks/unified-myst/tree/main/packages/core-parse#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/executablebooks/unified-myst.git"
+    },
+    "bugs": {
+        "url": "https://github.com/executablebooks/unified-myst/issues"
+    },
+    "keywords": [
+        "myst",
+        "mdast",
+        "unified",
+        "micromark"
+    ],
+    "type": "module",
+    "module": "./dist/module/index.js",
+    "types": "./dist/types/index.d.ts",
+    "files": [
+        "src",
+        "dist"
+    ],
+    "exports": {
+        "default": {
+            "import": "./dist/module/index.js"
+        },
+        "development": {
+            "import": "./src/index.js"
+        }
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "clean": "rimraf dist",
+        "build:types": "tsc --declaration",
+        "build:bundles": "rollup -c --failAfterWarnings",
+        "build": "npm-run-all -l clean -p build:types build:bundles",
+        "prepublishOnly": "npm run build",
+        "lint:type-cov": "npm run build:types && type-coverage",
+        "lint": "eslint --max-warnings 1 {src,tests}/**/*.js",
+        "lint:fix": "eslint --fix src/**/*.js",
+        "format": "prettier --write \"{src,tests}/**/*.js\"",
+        "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "^@unified-myst/(.*)$": "<rootDir>/../$1/src/index.js"
+        }
+    },
+    "dependencies": {
+        "@unified-myst/break-extension": "file:packages/break-extension",
+        "@unified-myst/comment-extension": "file:packages/comment-extension",
+        "@unified-myst/nested-parse": "file:packages/nested-parse",
+        "@unified-myst/process-roles-directives": "file:packages/process-roles-directives",
+        "@unified-myst/role-extension": "file:packages/role-extension",
+        "@unified-myst/target-extension": "file:packages/target-extension",
+        "mdast-util-from-markdown": "^1.2.0",
+        "mdast-util-frontmatter": "^1.0.0",
+        "mdast-util-gfm-footnote": "^1.0.1",
+        "mdast-util-gfm-table": "^1.0.4",
+        "micromark-extension-frontmatter": "^1.0.0",
+        "micromark-extension-gfm-footnote": "^1.0.4",
+        "micromark-extension-gfm-table": "^1.0.5",
+        "unist-builder": "^3.0.0"
+    },
+    "devDependencies": {
+        "micromark-util-types": "^1.0.2"
+    }
+}
