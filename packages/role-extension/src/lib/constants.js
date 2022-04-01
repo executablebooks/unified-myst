@@ -1,5 +1,5 @@
 /**
- * The token types for the mystRole extension.
+ * The token/node types for the mystRole extension.
  */
 
 export const tokenTypes = {
@@ -9,5 +9,6 @@ export const tokenTypes = {
 }
 
 export const nodeTypes = {
-    mystRole: 'mystRole',
+    mystRole: 'role',
+    mystRoleName: 'roleName',
 }

@@ -1,5 +1,10 @@
 /**
  *
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('@unified-myst/process-roles-directives').roleProcessor} roleProcessor
+ * @typedef {import('@unified-myst/process-roles-directives').RawRoleNode} RawRoleNode
+ * @typedef {import('@unified-myst/process-roles-directives').directiveProcessor} directiveProcessor
+ *
  * @typedef extensionNameMixin
  * @property {string} extensionName
  *
@@ -19,7 +24,7 @@
  * @property {any} processor
  * @typedef {TransformExtension & extensionNameMixin & nameMixin} Transform
  *
- * @typedef {any} Config
+ * @typedef {{default: any, type: string, [keys: string]: any}} Config
  *
  * @typedef Extension
  * @property {string} name
@@ -28,8 +33,6 @@
  * @property {Record<string, TransformExtension>} [transforms]
  * @property {Record<string, Config>} [config]
  *
- * @typedef {import('@unified-myst/process-roles-directives').roleProcessor} roleProcessor
- * @typedef {import('@unified-myst/process-roles-directives').directiveProcessor} directiveProcessor
  */
 
 import { fromMarkdown } from 'mdast-util-from-markdown'
@@ -58,9 +61,26 @@ import { gfmFootnote as gfmFootnoteMmarkExt } from 'micromark-extension-gfm-foot
 import { gfmFootnoteFromMarkdown as gfmFootnoteMdastExt } from 'mdast-util-gfm-footnote'
 
 import { u } from 'unist-builder'
+import Ajv from 'ajv'
+
+import { NestedParser } from '@unified-myst/nested-parse'
 
 export class Parser {
     constructor() {
+        /**
+         * @private
+         * @type {{type: string, properties: Record<string, Object>, additionalProperties: boolean}}
+         */
+        this.configSchema = {
+            type: 'object',
+            properties: {},
+            additionalProperties: false,
+        }
+        /**
+         * @private
+         * @type {{[keys: string]: any}}
+         */
+        this.config = {}
         /**
          * @private
          * @type {Record<string, Role>}
@@ -101,7 +121,35 @@ export class Parser {
         }
     }
 
-    // TODO get config schema
+    /** Return a copy of the config schema */
+    getConfigSchema() {
+        return JSON.parse(JSON.stringify(this.configSchema))
+    }
+
+    /**
+     * @param {{ [keys: string]: any; }} config
+     */
+    setConfig(config) {
+        const ajv = new Ajv()
+        const validate = ajv.compile(this.configSchema)
+        const valid = validate(config)
+        if (!valid) {
+            throw new Error(
+                `Config validation failed: ${JSON.stringify(
+                    validate.errors,
+                    null,
+                    ' '
+                )}`
+            )
+        }
+        this.config = config
+        return this
+    }
+    getConfig() {
+        // TODO merge with defaults from schema
+        return this.config
+    }
+
     /** @param {string} name */
     getRole(name) {
         if (!this.roles[name]) {
@@ -127,6 +175,14 @@ export class Parser {
 
     /** @param {Extension} extension */
     addExtension(extension) {
+        // TODO don't allow extension to be added with same name twice
+        if (extension.config) {
+            this.configSchema.properties[extension.name] = {
+                type: 'object',
+                properties: extension.config,
+                additionalProperties: false,
+            }
+        }
         if (extension.roles) {
             for (const [name, role] of Object.entries(extension.roles)) {
                 // TODO throw error, unless override=true
@@ -156,16 +212,22 @@ export class Parser {
                 // TODO sort transforms by priority
             }
         }
+        return this
     }
 
     /**
-     * @param {import("micromark-util-types").Value} text
+     * @param {string | Uint8Array} text
      */
     toAst(text) {
+        // TODO this.getConfig() and cache for duration of parse
         // Initial parse
         const mdast = fromMarkdown(text, this.mdastExtensions)
         // process roles and directives
-        processRolesDirectives(mdast, this.processRole, this.processDirective)
+        processRolesDirectives(
+            mdast,
+            this.processRole.bind(this),
+            this.processDirective.bind(this)
+        )
         // TODO apply transform
         return mdast
     }
@@ -174,8 +236,22 @@ export class Parser {
      * @private
      * @type roleProcessor
      */
-    processRole(node) {
-        return [u('placeholder', { name: node.name })]
+    processRole(node, context) {
+        const role = this.getRole(node.name)
+        if (!role) {
+            return [
+                u('error', {
+                    value: `Unknown role: ${node.name}`,
+                    position: node.position,
+                }),
+            ]
+        }
+        // @ts-ignore
+        return new role.processor(
+            node,
+            context,
+            new NestedParser(this.mdastExtensions)
+        ).run()
     }
 
     /**
@@ -183,6 +259,13 @@ export class Parser {
      * @type directiveProcessor
      */
     processDirective(node) {
+        const directive = this.getDirective(node.name)
+        if (!directive) {
+            return u('error', {
+                value: `Unknown directive: ${node.name}`,
+                position: node.position,
+            })
+        }
         return u('placeholder', { name: node.name })
     }
 }

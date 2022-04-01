@@ -92,10 +92,6 @@ The parsing process is as follows:
   - Transforms are operations which modify the syntax tree.
   - They can also be used to extract information from the syntax tree.
 
-## Configuration mechanism
-
-TODO ...
-
 ## Extension mechanism
 
 TODO ...

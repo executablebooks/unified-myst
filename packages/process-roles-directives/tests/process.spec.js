@@ -1,5 +1,9 @@
 import { u } from 'unist-builder'
+import { nodeTypes } from '../../role-extension/src/index.js'
 import { processRolesDirectives } from '../src/index.js'
+
+const roleType = nodeTypes.mystRole
+const dirType = 'mystDirective'
 
 /**
  * @param {any} node
@@ -23,14 +27,14 @@ function processRoleNested(node) {
     if (node.name === 'nested') {
         return [u('leaf')]
     }
-    return [u('mystRole', { name: 'nested' })]
+    return [u(roleType, { name: 'nested' })]
 }
 
 /**
  * @param {any} node
  */
 function processDirectiveSimple(node) {
-    return u('mystDirective', node)
+    return u(dirType, node)
 }
 
 /**
@@ -38,9 +42,9 @@ function processDirectiveSimple(node) {
  */
 function processDirectiveNested(node) {
     if (node.name === 'nested') {
-        return u('mystDirective', node)
+        return u(dirType, node)
     }
-    return u('mystDirective', [
+    return u(dirType, [
         u('code', {
             lang: '{nested}',
             meta: 'argument',
@@ -50,7 +54,7 @@ function processDirectiveNested(node) {
 }
 
 function processDirectiveRole() {
-    return u('mystDirective', [u('mystRole', { name: 'name' })])
+    return u(dirType, [u(roleType, { name: 'name' })])
 }
 
 /**
@@ -59,9 +63,9 @@ function processDirectiveRole() {
  */
 function processDirectiveDefinition(node, context) {
     if (node.name === 'nested') {
-        return u('mystDirective', context)
+        return u(dirType, context)
     }
-    return u('mystDirective', [
+    return u(dirType, [
         u('leaf', context),
         u('code', {
             lang: '{nested}',
@@ -78,9 +82,9 @@ function processDirectiveDefinition(node, context) {
  */
 function processDirectiveFootnote(node, context) {
     if (node.name === 'nested') {
-        return u('mystDirective', context)
+        return u(dirType, context)
     }
-    return u('mystDirective', [
+    return u(dirType, [
         u('leaf', context),
         u('code', {
             lang: '{nested}',
@@ -99,7 +103,7 @@ describe('Process roles', () => {
     })
     test('basic', () => {
         const tree = u('root', [
-            u('paragraph', [u('mystRole', { name: 'name' })]),
+            u('paragraph', [u(roleType, { name: 'name' })]),
         ])
         processRolesDirectives(tree, processRoleSimple, processDirectiveSimple)
         expect(tree).toMatchSnapshot()
@@ -107,10 +111,10 @@ describe('Process roles', () => {
     test('multiple', () => {
         const tree = u('root', [
             u('paragraph', [
-                u('mystRole', { name: 'name1' }),
-                u('mystRole', { name: 'name2' }),
+                u(roleType, { name: 'name1' }),
+                u(roleType, { name: 'name2' }),
             ]),
-            u('paragraph', [u('mystRole', { name: 'name3' })]),
+            u('paragraph', [u(roleType, { name: 'name3' })]),
         ])
         processRolesDirectives(tree, processRoleSimple, processDirectiveSimple)
         expect(tree).toMatchSnapshot()
@@ -118,7 +122,7 @@ describe('Process roles', () => {
     test('pre-processed', () => {
         const tree = u('root', [
             u('paragraph', [
-                u('mystRole', { name: 'name1' }, [u('text', 'Hello')]),
+                u(roleType, { name: 'name1' }, [u('text', 'Hello')]),
             ]),
         ])
         processRolesDirectives(tree, processRoleSimple, processDirectiveSimple)
@@ -126,14 +130,14 @@ describe('Process roles', () => {
     })
     test('nested', () => {
         const tree = u('root', [
-            u('paragraph', [u('mystRole', { name: 'name' })]),
+            u('paragraph', [u(roleType, { name: 'name' })]),
         ])
         processRolesDirectives(tree, processRoleNested, processDirectiveSimple)
         expect(tree).toMatchSnapshot()
     })
     test('definition', () => {
         const tree = u('root', [
-            u('paragraph', [u('mystRole', { name: 'name' })]),
+            u('paragraph', [u(roleType, { name: 'name' })]),
             u('definition', { identifier: 'test' }),
         ])
         processRolesDirectives(tree, processRoleSimple, processDirectiveSimple)
@@ -141,7 +145,7 @@ describe('Process roles', () => {
     })
     test('footnote', () => {
         const tree = u('root', [
-            u('paragraph', [u('mystRole', { name: 'name' })]),
+            u('paragraph', [u(roleType, { name: 'name' })]),
             u('footnoteDefinition', { identifier: 'test' }),
         ])
         processRolesDirectives(tree, processRoleSimple, processDirectiveSimple)

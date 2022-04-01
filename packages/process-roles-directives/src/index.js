@@ -17,10 +17,13 @@
  * @property {string?} [meta]
  * @property {Position} [position]
  *
- * @typedef {(node: RawRoleNode, context: {definitions: Set<string>, footnotes: Set<string>}) => Node[]} roleProcessor
- * @typedef {(node: RawDirectiveNode, context: {definitions: Set<string>, footnotes: Set<string>}) => Node} directiveProcessor
+ * @typedef {{definitions: Set<string>, footnotes: Set<string>}} ParseContext
+ *
+ * @typedef {(node: RawRoleNode, context: ParseContext) => Node[]} roleProcessor
+ * @typedef {(node: RawDirectiveNode, context: ParseContext) => Node} directiveProcessor
  */
 import { visit, SKIP, CONTINUE } from 'unist-util-visit'
+import { normalizeIdentifier } from 'micromark-util-normalize-identifier'
 
 const codeLangRegex = /^\{([^\s}]+)\}$/
 
@@ -48,16 +51,16 @@ export function processRolesDirectives(
     /** @param {Node} node */
     function collectIdentifiers(node) {
         switch (node.type) {
-            case 'paragraph' || 'heading' || 'mystRole' || 'mystDirective':
+            case 'paragraph' || 'heading' || 'role' || 'mystDirective':
                 // We don't need to search inside these nodes
                 return SKIP
             case 'definition':
                 // @ts-ignore
-                definitions.add(node.identifier)
+                definitions.add(normalizeIdentifier(node.identifier))
                 return SKIP
             case 'footnoteDefinition':
                 // @ts-ignore
-                footnotes.add(node.identifier)
+                footnotes.add(normalizeIdentifier(node.identifier))
                 return SKIP
         }
     }
@@ -71,7 +74,7 @@ export function processRolesDirectives(
      * @param {Node} parent
      */
     function processVisitor(node, index, parent) {
-        if (node.type === 'mystRole') {
+        if (node.type === 'role') {
             // @ts-ignore
             if (node.children !== undefined) {
                 // The role is already processed, so we don't need to do anything

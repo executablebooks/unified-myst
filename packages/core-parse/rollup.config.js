@@ -12,6 +12,8 @@ export default [
             '@unified-myst/comment-extension',
             '@unified-myst/role-extension',
             '@unified-myst/target-extension',
+            '@unified-myst/nested-parse',
+            'ajv',
             'mdast-util-from-markdown',
             'micromark-extension-frontmatter',
             'mdast-util-frontmatter',

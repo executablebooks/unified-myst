@@ -42,15 +42,15 @@ Object {
       "children": Array [
         Object {
           "definitions": Set {
-            "test",
+            "TEST",
           },
           "footnotes": Set {},
           "type": "leaf",
         },
         Object {
           "definitions": Set {
-            "test",
-            "other",
+            "TEST",
+            "OTHER",
           },
           "footnotes": Set {},
           "type": "mystDirective",
@@ -79,15 +79,15 @@ Object {
         Object {
           "definitions": Set {},
           "footnotes": Set {
-            "test",
+            "TEST",
           },
           "type": "leaf",
         },
         Object {
           "definitions": Set {},
           "footnotes": Set {
-            "test",
-            "other",
+            "TEST",
+            "OTHER",
           },
           "type": "mystDirective",
         },
@@ -134,7 +134,7 @@ Object {
             },
           ],
           "name": "name",
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "type": "mystDirective",
@@ -157,7 +157,7 @@ Object {
             },
           ],
           "name": "name",
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "type": "paragraph",
@@ -176,14 +176,14 @@ Object {
           "children": Array [
             Object {
               "definitions": Set {
-                "test",
+                "TEST",
               },
               "name": "name",
               "type": "element",
             },
           ],
           "name": "name",
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "type": "paragraph",
@@ -206,14 +206,14 @@ Object {
           "children": Array [
             Object {
               "footnotes": Set {
-                "test",
+                "TEST",
               },
               "name": "name",
               "type": "element",
             },
           ],
           "name": "name",
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "type": "paragraph",
@@ -240,7 +240,7 @@ Object {
             },
           ],
           "name": "name1",
-          "type": "mystRole",
+          "type": "role",
         },
         Object {
           "children": Array [
@@ -250,7 +250,7 @@ Object {
             },
           ],
           "name": "name2",
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "type": "paragraph",
@@ -265,7 +265,7 @@ Object {
             },
           ],
           "name": "name3",
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "type": "paragraph",
@@ -289,11 +289,11 @@ Object {
                 },
               ],
               "name": "nested",
-              "type": "mystRole",
+              "type": "role",
             },
           ],
           "name": "name",
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "type": "paragraph",
@@ -333,7 +333,7 @@ Object {
             },
           ],
           "name": "name1",
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "type": "paragraph",

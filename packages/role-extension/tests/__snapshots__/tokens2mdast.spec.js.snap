@@ -20,7 +20,7 @@ Object {
               "offset": 0,
             },
           },
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "position": Object {
@@ -75,7 +75,7 @@ line",
               "offset": 0,
             },
           },
-          "type": "mystRole",
+          "type": "role",
         },
       ],
       "position": Object {
