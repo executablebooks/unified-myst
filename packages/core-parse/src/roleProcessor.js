@@ -15,8 +15,11 @@ export class RoleProcessor {
      */
     constructor(node, context, parser) {
         this.node = node
-        this.context = context
+        this.state = context.state
+        /** @private */
         this.parser = parser
+        /** @private */
+        this.context = context
     }
     /**
      * @abstract

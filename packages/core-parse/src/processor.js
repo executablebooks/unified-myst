@@ -1,41 +1,77 @@
 /**
+ * @template P
+ * @typedef Hook
+ * @property {number} priority Hooks are executed, sorted by ascending order of priority (zero first).
+ * @property {P} processor
+ * @property {string} name
+ * @property {string} extensionName
+ */
+
+/**
+ * @template P
+ * @typedef {Omit<Hook<P>, "name" | "extensionName">} HookExtension
+ */
+
+/**
  *
  * @typedef {import('unist').Node} Node
  * @typedef {import('@unified-myst/process-roles-directives').roleProcessor} roleProcessor
  * @typedef {import('@unified-myst/process-roles-directives').RawRoleNode} RawRoleNode
  * @typedef {import('@unified-myst/process-roles-directives').directiveProcessor} directiveProcessor
  *
- * @typedef extensionNameMixin
- * @property {string} extensionName
- *
  * @typedef nameMixin
  * @property {string} name
  *
- * @typedef {import('./roleProcessor').RoleProcessor} RoleProcessor
- * TODO how to specify the type of the RoleProcessor class (not instance)?
- * @typedef RoleExtension
- * @property {any} processor
- * @typedef {RoleExtension & extensionNameMixin } Role
+ * @typedef Role
+ * @property {boolean} override Whether this can override an existing directive of this name
+ * @property {typeof import('./roleProcessor').RoleProcessor} processor
+ * @property {string} extensionName
  *
- * @typedef {import('./directiveProcessor').DirectiveProcessor} DirectiveProcessor
- * TODO how to specify the type of the DirectiveProcessor class (not instance)?
- * @typedef DirectiveExtension
- * @property {any} processor
- * @typedef {DirectiveExtension & extensionNameMixin } Directive
+ * @typedef {Omit<Role, "extensionName">} RoleExtension
  *
- * @typedef TransformExtension
- * @property {number} priority
- * @property {any} processor
- * @typedef {TransformExtension & extensionNameMixin & nameMixin} Transform
+ * @typedef Directive
+ * @property {boolean} override Whether this can override an existing directive of this name
+ * @property {typeof import('./directiveProcessor').DirectiveProcessor} processor
+ * @property {string} extensionName
  *
- * @typedef {{default: any, type: string, [keys: string]: any}} Config
+ * @typedef {Omit<Directive, "extensionName">} DirectiveExtension
+ *
+ * @typedef {(config: Object) => null} beforeConfigProcessor
+ *  Intended for modifications of the config, before it is validated.
+ * @typedef {(source: string | Uint8Array, config: Object, state: Object) => string | Uint8Array | null} beforeRead
+ *  Intended for modification of the source text and setup of initial state.
+ *  If a non-null value is returned, the source text is replaced with the returned value.
+ * @typedef {(ast: Node, config: Object, state: Object) => null} afterReadProcessor
+ *  Intended for modification of the AST.
+ * @typedef {(ast: Node, config: Object, state: Object) => null} afterTransformsProcessor
+ *  Intended for extraction of information from the AST.
+ *
+ * @typedef {{default: any, type: string, [keys: string]: any}} ConfigExtension
+ *
+ * @typedef HooksExtension
+ * @property {Record<string, HookExtension<beforeConfigProcessor>>} [beforeConfig]
+ * @property {Record<string, HookExtension<beforeRead>>} [beforeRead]
+ * @property {Record<string, HookExtension<afterReadProcessor>>} [afterRead]
+ * @property {Record<string, HookExtension<afterTransformsProcessor>>} [afterTransforms]
+ *
+ * @typedef Hooks
+ * @property {Hook<beforeConfigProcessor>[]} beforeConfig
+ * @property {Hook<beforeRead>[]} beforeRead
+ * @property {Hook<afterReadProcessor>[]} afterRead
+ * @property {Hook<afterTransformsProcessor>[]} afterTransforms
+ *
+ * @typedef HookMap
+ * @property {Hook<beforeConfigProcessor>} beforeConfig
+ * @property {Hook<beforeRead>} beforeRead
+ * @property {Hook<afterReadProcessor>} afterRead
+ * @property {Hook<afterTransformsProcessor>} afterTransforms
  *
  * @typedef Extension
  * @property {string} name
  * @property {Record<string, RoleExtension>} [roles]
- * @property {Record<string, Directive>} [directives]
- * @property {Record<string, TransformExtension>} [transforms]
- * @property {Record<string, Config>} [config]
+ * @property {Record<string, DirectiveExtension>} [directives]
+ * @property {HooksExtension} [hooks]
+ * @property {Record<string, ConfigExtension>} [config]
  *
  */
 
@@ -70,7 +106,7 @@ import Ajv from 'ajv'
 import { NestedParser } from '@unified-myst/nested-parse'
 import { deconstructNode } from './parseDirective.js'
 
-export class Parser {
+export class Processor {
     constructor() {
         /**
          * @private
@@ -98,9 +134,15 @@ export class Parser {
         this.directives = {}
         /**
          * @private
-         * @type {Transform[]}
+         * @type {Hooks}
          */
-        this.transforms = []
+        this.hooks = {
+            beforeConfig: [],
+            beforeRead: [],
+            afterRead: [],
+            afterTransforms: [],
+        }
+        // TODO how to extend parser?
         /**
          * @private
          */
@@ -134,7 +176,7 @@ export class Parser {
     /**
      * @param {{ [keys: string]: any; }} config
      */
-    setConfig(config) {
+    validateConfig(config) {
         const ajv = new Ajv()
         const validate = ajv.compile(this.configSchema)
         const valid = validate(config)
@@ -147,12 +189,18 @@ export class Parser {
                 )}`
             )
         }
+    }
+    /**
+     * @param {{ [keys: string]: any; }} config
+     */
+    setConfig(config) {
+        this.validateConfig(config)
         this.config = config
         return this
     }
     getConfig() {
         // TODO merge with defaults from schema
-        return this.config
+        return JSON.parse(JSON.stringify(this.config))
     }
 
     /** @param {string} name */
@@ -171,10 +219,20 @@ export class Parser {
         return this.directives[name]
     }
 
-    /** Iterate by order of priority */
-    *iterTransforms() {
-        for (const transform of this.transforms) {
-            yield transform
+    /** Iterate hooks for an event, sorted by ascending order of priority
+     * @template {keyof Hooks} T
+     * @param {T} event
+     * @returns {Generator<HookMap[T], void, undefined>}
+     */
+    *iterHooks(event) {
+        if (!this.hooks[event]) {
+            return
+        }
+        for (const hook of this.hooks[event].sort(
+            (a, b) => a.priority - b.priority
+        )) {
+            // @ts-ignore
+            yield hook
         }
     }
 
@@ -190,7 +248,12 @@ export class Parser {
         }
         if (extension.roles) {
             for (const [name, role] of Object.entries(extension.roles)) {
-                // TODO throw error, unless override=true
+                if (!!role.override && this.roles[name]) {
+                    throw new Error(
+                        `Cannot add directive ${name} from extension ${extension.name} to parser, ` +
+                            `already set by extension ${this.roles[name].extensionName}`
+                    )
+                }
                 this.roles[name] = { ...role, extensionName: extension.name }
             }
         }
@@ -198,23 +261,30 @@ export class Parser {
             for (const [name, directive] of Object.entries(
                 extension.directives
             )) {
-                // TODO throw error, unless override=true
+                if (!!directive.override && this.directives[name]) {
+                    throw new Error(
+                        `Cannot add directive ${name} from extension ${extension.name} to parser, ` +
+                            `already set by extension ${this.directives[name].extensionName}`
+                    )
+                }
                 this.directives[name] = {
                     ...directive,
                     extensionName: extension.name,
                 }
             }
         }
-        if (extension.transforms) {
-            for (const [name, transform] of Object.entries(
-                extension.transforms
-            )) {
-                this.transforms.push({
-                    ...transform,
-                    name,
-                    extensionName: extension.name,
-                })
-                // TODO sort transforms by priority
+        if (extension.hooks) {
+            for (const [eventName, events] of Object.entries(extension.hooks)) {
+                /** @type {keyof Hooks} */
+                // @ts-ignore
+                const eventNameTyped = eventName
+                for (const [name, hook] of Object.entries(events)) {
+                    this.hooks[eventNameTyped].push({
+                        ...hook,
+                        name: name,
+                        extensionName: extension.name,
+                    })
+                }
             }
         }
         return this
@@ -222,19 +292,39 @@ export class Parser {
 
     /**
      * @param {string | Uint8Array} text
+     * @param {Object} [state] the initial global state object, if undefined a new one will be created
      */
-    toAst(text) {
-        // TODO this.getConfig() and cache for duration of parse
-        // Initial parse
-        const mdast = fromMarkdown(text, this.mdastExtensions)
+    toAst(text, state) {
+        // Setup configuration
+        const config = this.getConfig()
+        for (const hook of this.iterHooks('beforeConfig')) {
+            hook.processor(config)
+        }
+        this.validateConfig(config)
+        // Setup initial state
+        state = state || {}
+        for (const hook of this.iterHooks('beforeRead')) {
+            const newText = hook.processor(text, config, state)
+            if (newText !== null) {
+                text = newText
+            }
+        }
+        // parse source-text
+        const ast = fromMarkdown(text, this.mdastExtensions)
         // process roles and directives
         processRolesDirectives(
-            mdast,
+            ast,
             this.processRole.bind(this),
             this.processDirective.bind(this)
         )
-        // TODO apply transform
-        return mdast
+        // run post-parse hooks
+        for (const hook of this.iterHooks('afterRead')) {
+            hook.processor(ast, config, state)
+        }
+        for (const hook of this.iterHooks('afterTransforms')) {
+            hook.processor(ast, config, state)
+        }
+        return { ast, state }
     }
 
     /**

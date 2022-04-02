@@ -45,6 +45,7 @@ Object {
             "TEST",
           },
           "footnotes": Set {},
+          "state": Object {},
           "type": "leaf",
         },
         Object {
@@ -53,6 +54,7 @@ Object {
             "OTHER",
           },
           "footnotes": Set {},
+          "state": Object {},
           "type": "mystDirective",
         },
         Object {
@@ -81,6 +83,7 @@ Object {
           "footnotes": Set {
             "TEST",
           },
+          "state": Object {},
           "type": "leaf",
         },
         Object {
@@ -89,6 +92,7 @@ Object {
             "TEST",
             "OTHER",
           },
+          "state": Object {},
           "type": "mystDirective",
         },
         Object {

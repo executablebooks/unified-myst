@@ -17,7 +17,7 @@
  * @property {string?} [meta]
  * @property {Position} [position]
  *
- * @typedef {{definitions: Set<string>, footnotes: Set<string>}} ParseContext
+ * @typedef {{state: Object, definitions: Set<string>, footnotes: Set<string>}} ParseContext
  *
  * @typedef {(node: RawRoleNode, context: ParseContext) => Node[]} roleProcessor
  * @typedef {(node: RawDirectiveNode, context: ParseContext) => Node} directiveProcessor
@@ -33,16 +33,19 @@ const codeLangRegex = /^\{([^\s}]+)\}$/
  * @param {Node} tree
  * @param {roleProcessor} processRole
  * @param {directiveProcessor} processDirective
- * @param {Set<string>} [defs]
- * @param {Set<string>} [foots]
+ * @param {Object} [state] the global state
+ * @param {Set<string>} [defs] Set of definition identifiers in the parent scope
+ * @param {Set<string>} [foots] Set of GFM footnote identifiers in the parent scope
  */
 export function processRolesDirectives(
     tree,
     processRole,
     processDirective,
+    state,
     defs,
     foots
 ) {
+    const definedState = state || {}
     // Collect definition and footnote identifiers, above the level of the roles/directives,
     // so that we can add them to any nested parses and correctly resolve any references.
     const definitions = defs || new Set()
@@ -83,7 +86,11 @@ export function processRolesDirectives(
             /** @type RawRoleNode  */
             // @ts-ignore
             const role = node
-            const children = processRole(role, { definitions, footnotes })
+            const children = processRole(role, {
+                state: definedState,
+                definitions,
+                footnotes,
+            })
             // @ts-ignore
             node.children = children
             // TODO add guard to prevent infinite recursion?
@@ -104,6 +111,7 @@ export function processRolesDirectives(
                     position: code.position,
                 },
                 {
+                    state: definedState,
                     definitions,
                     footnotes,
                 }
@@ -112,6 +120,7 @@ export function processRolesDirectives(
                 directive,
                 processRole,
                 processDirective,
+                definedState,
                 new Set(definitions),
                 new Set(footnotes)
             )

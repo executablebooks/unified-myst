@@ -1,9 +1,17 @@
 /**
  *
  * @typedef {import('unist').Node} Node
- * @typedef {import('@unified-myst/process-roles-directives').RawDirectiveNode} RawDirectiveNode
  * @typedef {import('@unified-myst/process-roles-directives').ParseContext} ParseContext
  * @typedef {import('@unified-myst/nested-parse').NestedParser} NestedParser
+ *
+ * @typedef DirectiveNode
+ * @property {string} type
+ * @property {string} name
+ * @property {import('@unified-myst/process-roles-directives').Position} [position]
+ * @property {string[]} args
+ * @property {Record<string, any>} options
+ * @property {string} body
+ * @property {number} bodyOffset
  *
  */
 
@@ -20,14 +28,17 @@ export class DirectiveProcessor {
     static option_spec = {}
 
     /**
-     * @param {RawDirectiveNode} node
+     * @param {DirectiveNode} node
      * @param {ParseContext} context
      * @param {NestedParser} parser
      */
     constructor(node, context, parser) {
         this.node = node
-        this.context = context
+        this.state = context.state
+        /** @private */
         this.parser = parser
+        /** @private */
+        this.context = context
     }
     /**
      * @abstract
