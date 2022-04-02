@@ -119,13 +119,20 @@ Add introspection to the parser, e.g. order of transforms.
 
 ## Design decisions
 
+The design is intended to quite closely mirror that of [docutils](https://docutils.sourceforge.io) and [Sphinx](https://www.sphinx-doc.org).
+Their documentation generation and extension mechanism has been developed over many years, and has a relatively large community.
+So the similar API will facilitate for porting of existing Sphinx extensions.
+
+It diverges from docutils/Sphinx though, in a number of key ways, to address some design shortfalls (in my opinion) of that system.
+
+Firstly, the underlying AST is based on [MDAST](https://github.com/syntax-tree/mdast), rather than docutils nodes.
+The key improvement of MDAST, is that it is JSONable, allowing for serialisation into a language agnostic format, and also for it to be manipulated/inspected by mdast's wide [ecosystem of utilities](https://github.com/syntax-tree/mdast#list-of-utilities).
+
 Where possible, everything should be an extension and serializable to JSON.
 
+non-global roles and directives
+
 Introspectable parser: get config schema, see what roles/directives/transforms are loaded, ...
-
-## Acknowledgements
-
-This parsing process and extension mechanism is partially adapted from [docutils](https://docutils.sourceforge.io) and [sphinx](https://www.sphinx-doc.org).
 
 ## TODO
 
