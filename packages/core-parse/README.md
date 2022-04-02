@@ -131,10 +131,13 @@ This parsing process and extension mechanism is partially adapted from [docutils
 
 - Is there any difference between [GFM footnotes](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#footnotes) and [Pandoc footnotes](https://pandoc.org/MANUAL.html#footnotes) (which is also the basis for [markdown-it footnotes](https://mdit-py-plugins.readthedocs.io/en/latest/#footnotes))?
 
-- Best way to namespace names for config etc?
-
 - Add Logging (and create error nodes)
 
 - Errors with node-resolve when trying to build the browser bundle
 
 - Errors with workspace build of types, because of wrong order (since core-parse depends on other packages)
+
+- Minimise AST walks:
+  - Concept of transforms that are purely data collectors
+    - Then they can be run at the same time, rather than performing multiple AST walks
+    - Maybe even just separate to transforms (and run after)?

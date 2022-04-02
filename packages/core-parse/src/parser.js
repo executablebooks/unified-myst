@@ -11,10 +11,14 @@
  * @typedef nameMixin
  * @property {string} name
  *
+ * @typedef {import('./roleProcessor').RoleProcessor} RoleProcessor
+ * TODO how to specify the type of the RoleProcessor class (not instance)?
  * @typedef RoleExtension
  * @property {any} processor
  * @typedef {RoleExtension & extensionNameMixin } Role
  *
+ * @typedef {import('./directiveProcessor').DirectiveProcessor} DirectiveProcessor
+ * TODO how to specify the type of the DirectiveProcessor class (not instance)?
  * @typedef DirectiveExtension
  * @property {any} processor
  * @typedef {DirectiveExtension & extensionNameMixin } Directive
@@ -64,6 +68,7 @@ import { u } from 'unist-builder'
 import Ajv from 'ajv'
 
 import { NestedParser } from '@unified-myst/nested-parse'
+import { deconstructNode } from './parseDirective.js'
 
 export class Parser {
     constructor() {
@@ -258,7 +263,7 @@ export class Parser {
      * @private
      * @type directiveProcessor
      */
-    processDirective(node) {
+    processDirective(node, context) {
         const directive = this.getDirective(node.name)
         if (!directive) {
             return u('error', {
@@ -266,6 +271,29 @@ export class Parser {
                 position: node.position,
             })
         }
-        return u('placeholder', { name: node.name })
+        // deconstruct the node
+        let data
+        try {
+            data = deconstructNode(node, directive.processor)
+        } catch (err) {
+            return u('error', {
+                value: `Parsing directive: ${err}`,
+                position: node.position,
+            })
+        }
+        // create the containing node
+        const newNode = u('mystDirective', {
+            name: node.name,
+            position: node.position,
+            ...data,
+        })
+        // create the children
+        // @ts-ignore
+        newNode.children = new directive.processor(
+            newNode,
+            context,
+            new NestedParser(this.mdastExtensions)
+        ).run()
+        return newNode
     }
 }

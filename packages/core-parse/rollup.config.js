@@ -14,6 +14,7 @@ export default [
             '@unified-myst/target-extension',
             '@unified-myst/nested-parse',
             'ajv',
+            'js-yaml',
             'mdast-util-from-markdown',
             'micromark-extension-frontmatter',
             'mdast-util-frontmatter',

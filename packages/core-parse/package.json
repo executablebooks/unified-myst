@@ -61,6 +61,7 @@
         "@unified-myst/role-extension": "file:packages/role-extension",
         "@unified-myst/target-extension": "file:packages/target-extension",
         "ajv": "^8.11.0",
+        "js-yaml": "^4.1.0",
         "mdast-util-from-markdown": "^1.2.0",
         "mdast-util-frontmatter": "^1.0.0",
         "mdast-util-gfm-footnote": "^1.0.1",
@@ -71,6 +72,7 @@
         "unist-builder": "^3.0.0"
     },
     "devDependencies": {
+        "@types/js-yaml": "^4.0.5",
         "micromark-util-types": "^1.0.2"
     }
 }

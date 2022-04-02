@@ -1,0 +1,4 @@
+extends:
+- "../../.eslintrc.yml"
+# note, this parser was added to fix: https://stackoverflow.com/questions/42701440/eslint-parsing-error-unexpected-token-error-for-assigned-fat-arrow-prop
+parser: "@babel/eslint-parser"
