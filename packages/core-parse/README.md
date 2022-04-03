@@ -102,28 +102,48 @@ The parsing process is as follows:
 
 ## Extension mechanism
 
-TODO ...
-
 Everything is an extension!
 
 ```javascript
-import { Processor } from '@unified-myst/core-parse'
+import { u } from 'unist-builder'
+import { toc } from 'mdast-util-toc'
+import { Processor, RoleProcessor, DirectiveProcessor } from '@unified-myst/core-parse'
+
+class RoleAbbr extends RoleProcessor {
+    run() {
+        const abbr = u('abbr', [])
+        abbr.children = this.nestedInlineParse(this.node.content)
+        return [abbr]
+    }
+}
+
+class DirectiveNote extends DirectiveProcessor {
+    static has_content = true
+    run() {
+        const note = u('note', [])
+        note.children = this.nestedParse(this.node.body)
+        return [note]
+    }
+}
+
+function addToc(ast, config) {
+    if (config.myExtension?.addtoc) {
+        const table = toc(ast)
+        ast.children.unshift(table.map)
+    }
+}
 
 myExtension = {
   name: 'myExtension',
-  roles: {rname: {processor}},
-  directives: {dname: {processor}},
-  hooks: {afterRead: {tname: {priority: 100, processor}}},
-  config: {cname: {default: '', type: 'string'}},
+  roles: { abbr: { processor: RoleAbbr } },
+  directives: { note: { processor: DirectiveNote } },
+  hooks: { afterRead: { addtoc: { priority: 100, processor: addToc } } },
+  config: { addtoc: { default: false, type: 'boolean' } },
 }
 parser = Processor().addExtension(myExtension)
-parser.setConfig({myExtension: {cname: 'value'}})
+parser.setConfig({myExtension: {addtoc: true}})
 result = parser.toAst('hallo')
 ```
-
-Disabling extensions, and even specific directives/roles/transforms within an extension.
-
-Add introspection to the parser, e.g. order of transforms.
 
 ## Design decisions
 
@@ -165,3 +185,5 @@ Introspectable parser: get config schema, see what roles/directives/transforms a
   - Concept of transforms that are purely data collectors
     - Then they can be run at the same time, rather than performing multiple AST walks
     - Maybe change the signature of `afterTransforms`, so that it is called on a single walk through the AST (for every node)
+
+- Disabling extensions, and even specific directives/roles/transforms within an extension.
