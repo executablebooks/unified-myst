@@ -142,30 +142,53 @@ export class Processor {
             afterRead: [],
             afterTransforms: [],
         }
-        // TODO how to extend parser?
         /**
          * @private
+         * @type {Record<string, [any, any]>}
          */
-        this.mdastExtensions = {
-            extensions: [
-                mystCommentMmarkExt,
-                mystBreakMmarkExt,
-                mystRoleMmarkExt,
-                mystTargetMmarkExt,
+        this.parsingExtensions = {
+            comment: [mystCommentMmarkExt, mystCommentMdastExt],
+            role: [mystRoleMmarkExt, mystRoleMdastExt],
+            target: [mystTargetMmarkExt, mystTargetMdastExt],
+            break: [mystBreakMmarkExt, mystBreakMdastExt],
+            frontmatter: [
                 frontmatterMmarkExt(['yaml']),
-                gfmTableMmarkExt,
-                gfmFootnoteMmarkExt(),
-            ],
-            mdastExtensions: [
-                mystCommentMdastExt,
-                mystBreakMdastExt,
-                mystRoleMdastExt,
-                mystTargetMdastExt,
                 frontmatterMdastExt(['yaml']),
-                gfmTableMdastExt,
-                gfmFootnoteMdastExt(),
             ],
+            'gfm-table': [gfmTableMmarkExt, gfmTableMdastExt],
+            'gfm-footnote': [gfmFootnoteMmarkExt(), gfmFootnoteMdastExt()],
         }
+    }
+
+    /**
+     * @private
+     * @param {string[]} [disableExtensions] list of extensions to disable
+     * @param {string[]} [disableConstructs] list of constructs to disable
+     */
+    getMdastConfig(disableExtensions, disableConstructs) {
+        // TODO how to extend parser?
+        /** @type {{extensions: any[], mdastExtensions: any[]}} */
+        const result = { extensions: [], mdastExtensions: [] }
+        for (const name of [
+            'comment',
+            'role',
+            'target',
+            'break',
+            'frontmatter',
+            'gfm-table',
+            'gfm-footnote',
+        ]) {
+            if (disableExtensions && disableExtensions.includes(name)) {
+                continue
+            }
+            result.extensions.push(this.parsingExtensions[name][0])
+            result.mdastExtensions.push(this.parsingExtensions[name][1])
+        }
+        if (disableConstructs) {
+            // see: https://github.com/micromark/micromark#case-turn-off-constructs
+            result.extensions.push({ disable: { null: disableConstructs } })
+        }
+        return result
     }
 
     /** Return a copy of the config schema */
@@ -310,12 +333,13 @@ export class Processor {
             }
         }
         // parse source-text
-        const ast = fromMarkdown(text, this.mdastExtensions)
+        const ast = fromMarkdown(text, this.getMdastConfig())
         // process roles and directives
         processRolesDirectives(
             ast,
             this.processRole.bind(this),
-            this.processDirective.bind(this)
+            this.processDirective.bind(this),
+            state
         )
         // run post-parse hooks
         for (const hook of this.iterHooks('afterRead')) {
@@ -345,7 +369,13 @@ export class Processor {
         return new role.processor(
             node,
             context,
-            new NestedParser(this.mdastExtensions)
+            // TODO maybe better to cache getMdastExtensions
+            new NestedParser(
+                this.getMdastConfig(
+                    ['frontmatter'],
+                    ['headingAtx', 'setextUnderline']
+                )
+            )
         ).run()
     }
 
@@ -382,7 +412,16 @@ export class Processor {
         newNode.children = new directive.processor(
             newNode,
             context,
-            new NestedParser(this.mdastExtensions)
+            // TODO maybe better to cache getMdastExtensions
+            new NestedParser(
+                this.getMdastConfig(
+                    ['frontmatter'],
+                    // TODO these are disabled, because docutils AST only allows headers at the top level
+                    // but technically this does not have to be the case here?
+                    // docutils also provides the "match_titles" option, to toggle this on/off
+                    ['headingAtx', 'setextUnderline']
+                )
+            )
         ).run()
         return newNode
     }
