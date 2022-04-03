@@ -144,7 +144,7 @@ Configuration variables are also name-spaced by extension name, to make it clear
 
 Improvements to the extension API... extensions are first-class citizens
 
-transforms -> afterRead event hooks
+transforms -> afterRead event hooks (<https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events>)
 
 non-global roles and directives
 
@@ -155,13 +155,7 @@ Introspectable parser: get config schema, see what roles/directives/transforms a
 - Is there any difference between [GFM footnotes](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#footnotes) and [Pandoc footnotes](https://pandoc.org/MANUAL.html#footnotes) (which is also the basis for [markdown-it footnotes](https://mdit-py-plugins.readthedocs.io/en/latest/#footnotes))?
 
 - Add Logging (and create error nodes)
-
-- allow for roles/directives/transforms to read/write to a document wide state object, and also access the config
-
-- Allow for extensions to hook into "events", e.g. before/after parsing
-  - See <https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx-core-events>
-  - with priority
-  - should transforms actually just be an event?
+  - Allow directive/role/hook processors to write to a log object
 
 - Errors with node-resolve when trying to build the browser bundle
 
@@ -170,5 +164,4 @@ Introspectable parser: get config schema, see what roles/directives/transforms a
 - Minimise AST walks:
   - Concept of transforms that are purely data collectors
     - Then they can be run at the same time, rather than performing multiple AST walks
-    - Maybe even just separate to transforms (and run after)?
-    - Probably just be an event
+    - Maybe change the signature of `afterTransforms`, so that it is called on a single walk through the AST (for every node)
