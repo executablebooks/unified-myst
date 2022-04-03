@@ -187,3 +187,8 @@ Introspectable parser: get config schema, see what roles/directives/transforms a
     - Maybe change the signature of `afterTransforms`, so that it is called on a single walk through the AST (for every node)
 
 - Disabling extensions, and even specific directives/roles/transforms within an extension.
+
+- How to handle conversion to output formats?
+  - For HTML, basically we want for extensions to be able to supply <https://github.com/syntax-tree/mdast-util-to-hast#optionshandlers>, and this would likely be similar for other formats
+  - But do we also include `mdast-util-to-hast` as a dependency here, since this would not be good for package size when it it not used?
+  - so then I guess we have a package that builds on this, to add them.

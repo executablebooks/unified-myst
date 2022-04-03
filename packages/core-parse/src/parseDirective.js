@@ -10,7 +10,7 @@
  * @property {number} required_arguments number of required arguments
  * @property {number} optional_arguments number of optional arguments
  * @property {boolean} [final_argument_whitespace] indicating if the final argument may contain whitespace
- * @property {Record<string, OptionSpecConverter>} [option_spec] mapping known option names to conversion functions
+ * @property {Record<string, OptionSpecConverter | null>} [option_spec] mapping known option names to conversion functions
  * @property {boolean} [has_content] if body content is allowed
  * @property {boolean} [rawOptions] If true, do not attempt to validate/convert options.
  *
@@ -150,23 +150,26 @@ function parseDirectiveOptions(content, fullSpec) {
     for (const [name, value] of Object.entries(options)) {
         const convertor = fullSpec.option_spec
             ? fullSpec.option_spec[name]
-            : null
-        if (!convertor) {
+            : undefined
+        if (convertor === undefined) {
             throw new DirectiveParsingError(`Unknown option: ${name}`)
         }
         let converted_value = value
         if (value === null || value === false) {
             converted_value = ''
         }
-        try {
-            // In docutils all values are simply read as strings,
-            // but loading with YAML these can be converted to other types, so we convert them back first
-            // TODO check that it is sufficient to simply do this conversion, or if there is a better way
-            converted_value = convertor(`${converted_value || ''}`)
-        } catch (error) {
-            throw new DirectiveParsingError(
-                `Invalid option value: (option: '${name}'; value: ${value})\n${error}`
-            )
+        // In docutils all values are simply read as strings,
+        // but loading with YAML these can be converted to other types, so we convert them back first
+        // TODO check that it is sufficient to simply do this conversion, or if there is a better way
+        converted_value = `${converted_value || ''}`
+        if (convertor !== null) {
+            try {
+                converted_value = convertor(converted_value)
+            } catch (error) {
+                throw new DirectiveParsingError(
+                    `Invalid option value: (option: '${name}'; value: ${value})\n${error}`
+                )
+            }
         }
         options[name] = converted_value
     }
