@@ -15,6 +15,7 @@ export default [
             '@unified-myst/nested-parse',
             'ajv',
             'js-yaml',
+            'lodash.merge',
             'mdast-util-from-markdown',
             'micromark-extension-frontmatter',
             'mdast-util-frontmatter',

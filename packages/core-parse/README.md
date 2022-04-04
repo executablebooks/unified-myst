@@ -9,7 +9,7 @@ import { Processor } from '@unified-myst/core-parse'
 
 const parser = new Processor()
 const result = parser.toAst('Hello world!')
-console.log(JSON.stringify(result.ast, null, '  '))
+console.log(JSON.stringify(result.ast, null, 2))
 ```
 
 yields:
@@ -143,6 +143,62 @@ myExtension = {
 parser = Processor().use(myExtension)
 parser.setConfig({myExtension: {addtoc: true}})
 result = parser.toAst('hallo')
+```
+
+## Configuration
+
+Each extension can supply its own configuration, as a "stub" for the [`properties`](https://json-schema.org/understanding-json-schema/reference/object.html#properties) key of a JSON schema.
+
+```javascript
+import { Processor } from '@unified-myst/core-parse'
+
+const processor = new Processor()
+processor.use({
+    name: 'core',
+    config: {
+        cname1: { default: '', type: 'string' },
+        cname2: { default: [], type: 'array' },
+    },
+})
+```
+
+From these configuration stubs, the full configuration schema is generated.
+
+```javascript
+console.log(JSON.stringify(processor.getConfigSchema(), null, 2))
+// {
+//   "type": "object",
+//   "properties": {
+//     "core": {
+//       "type": "object",
+//       "properties": {
+//         "cname1": {
+//           "default": "",
+//           "type": "string"
+//         },
+//         "cname2": {
+//           "default": [],
+//           "type": "array"
+//         }
+//       },
+//       "additionalProperties": false
+//     }
+//   },
+//   "additionalProperties": false
+// }
+```
+
+A configuration can be set using the [`setConfig`] method, then the [`getConfig`] method can be used to retrieve the full configuration, which merges this config with any defaults.
+
+```javascript
+processor.setConfig({ core: { cname1: 'test' } })
+console.log(JSON.stringify(processor.getConfig(), null, 2))
+// {
+//   "core": {
+//     "cname1": "test",
+//     "cname2": []
+//   }
+// }
 ```
 
 ## Design decisions

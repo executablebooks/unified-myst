@@ -99,12 +99,16 @@ import { gfmFootnoteFromMarkdown as gfmFootnoteMdastExt } from 'mdast-util-gfm-f
 
 import { u } from 'unist-builder'
 import Ajv from 'ajv'
+import merge from 'lodash.merge'
 
 import { NestedParser } from '@unified-myst/nested-parse'
 import { deconstructNode } from './parseDirective.js'
+import { getSchemaDefaults } from './schemaDefaults.js'
 
 export class Processor {
     constructor() {
+        /** @type {string[]} */
+        this.extensionNames = []
         /**
          * @private
          * @type {{type: string, properties: Record<string, Object>, additionalProperties: boolean}}
@@ -218,9 +222,13 @@ export class Processor {
         this.config = config
         return this
     }
-    getConfig() {
-        // TODO merge with defaults from schema
-        return JSON.parse(JSON.stringify(this.config))
+    /** @param {boolean} [original] Do not merge with schema defaults */
+    getConfig(original) {
+        if (original) {
+            return JSON.parse(JSON.stringify(this.config))
+        }
+        const config = getSchemaDefaults(this.configSchema)
+        return merge(config, this.config)
     }
 
     /** @param {string} name */
@@ -258,7 +266,11 @@ export class Processor {
 
     /** @param {Extension} extension */
     use(extension) {
-        // TODO don't allow extension to be added with same name twice
+        // Do not allow extension to be added with same name twice
+        if (this.extensionNames.includes(extension.name)) {
+            throw new Error(`Extension ${extension.name} already added`)
+        }
+        this.extensionNames.push(extension.name)
         if (extension.config) {
             this.configSchema.properties[extension.name] = {
                 type: 'object',

@@ -62,6 +62,7 @@
         "@unified-myst/target-extension": "file:packages/target-extension",
         "ajv": "^8.11.0",
         "js-yaml": "^4.1.0",
+        "lodash.merge": "^4.6.2",
         "mdast-util-from-markdown": "^1.2.0",
         "mdast-util-frontmatter": "^1.0.0",
         "mdast-util-gfm-footnote": "^1.0.1",
@@ -73,6 +74,7 @@
     },
     "devDependencies": {
         "@types/js-yaml": "^4.0.5",
+        "@types/lodash.merge": "^4.6.6",
         "micromark-util-types": "^1.0.2"
     }
 }
