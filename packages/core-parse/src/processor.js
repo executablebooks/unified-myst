@@ -257,7 +257,7 @@ export class Processor {
     }
 
     /** @param {Extension} extension */
-    addExtension(extension) {
+    use(extension) {
         // TODO don't allow extension to be added with same name twice
         if (extension.config) {
             this.configSchema.properties[extension.name] = {

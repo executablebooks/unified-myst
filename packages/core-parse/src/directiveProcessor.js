@@ -56,11 +56,13 @@ export class DirectiveProcessor {
 
     /**
      * @param {string | Uint8Array} text
+     * @param {{keepPosition?: boolean, offsetLine?: number}} [options]
      */
-    nestedParse(text) {
-        // TODO create offset position
+    nestedParse(text, options) {
         return this.parser.parse(text, {
-            stripPosition: true,
+            stripPosition: !(options?.keepPosition ?? false),
+            offsetColumn: (this.node.position?.start?.column ?? 1) - 1,
+            offsetLine: options?.offsetLine,
             definitions: [...this.context.definitions],
             footnotes: [...this.context.footnotes],
         })

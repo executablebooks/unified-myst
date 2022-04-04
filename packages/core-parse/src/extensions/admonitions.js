@@ -31,7 +31,10 @@ export class BaseAdmonition extends DirectiveProcessor {
                 class: [...(this.node.options.class || []), 'admonition'],
                 position: this.node.position,
             },
-            this.nestedParse(this.node.body)
+            this.nestedParse(this.node.body, {
+                keepPosition: true,
+                offsetLine: this.node.bodyOffset,
+            })
         )
         this.addName(admonition)
         const title = u(

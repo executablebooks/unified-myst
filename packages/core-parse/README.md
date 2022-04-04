@@ -140,7 +140,7 @@ myExtension = {
   hooks: { afterRead: { addtoc: { priority: 100, processor: addToc } } },
   config: { addtoc: { default: false, type: 'boolean' } },
 }
-parser = Processor().addExtension(myExtension)
+parser = Processor().use(myExtension)
 parser.setConfig({myExtension: {addtoc: true}})
 result = parser.toAst('hallo')
 ```
@@ -192,3 +192,12 @@ Introspectable parser: get config schema, see what roles/directives/transforms a
   - For HTML, basically we want for extensions to be able to supply <https://github.com/syntax-tree/mdast-util-to-hast#optionshandlers>, and this would likely be similar for other formats
   - But do we also include `mdast-util-to-hast` as a dependency here, since this would not be good for package size when it it not used?
   - so then I guess we have a package that builds on this, to add them.
+
+- Better propagation of position for nested parsing
+  - Ideally, this requires declarative directive structure, so that we can parse argument/options/body directly to CST tokens, and thus capture their positions
+    - Indentation also gets a bit weird in code fences <https://spec.commonmark.org/0.30/#example-131>, i.e. currently we are indenting all body lines by the same amount as the indentation of the opening, but this is not strictly correct.
+  - For roles it would be good to get the offset of the start of the content, from the start of the role
+    - It becomes problematic though, if the content spans multiple lines and the role is within another construct, and thus "indented".
+  - Another, bigger change, would be to have a separate syntax for "directives/roles that just wrap nested content", then you could do proper token parsing:
+    - Could even directly support: <https://www.npmjs.com/package/micromark-extension-directive>
+      - They don't allow an argument though, which is a bit of a pain for e.g. admonition titles
