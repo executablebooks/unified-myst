@@ -19,9 +19,6 @@
  * @typedef {import('@unified-myst/process-roles-directives').RawRoleNode} RawRoleNode
  * @typedef {import('@unified-myst/process-roles-directives').directiveProcessor} directiveProcessor
  *
- * @typedef nameMixin
- * @property {string} name
- *
  * @typedef Role
  * @property {boolean} override Whether this can override an existing directive of this name
  * @property {typeof import('./roleProcessor').RoleProcessor} processor

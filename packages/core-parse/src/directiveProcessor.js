@@ -16,15 +16,21 @@
  */
 
 export class DirectiveProcessor {
-    /** @type {number} */
+    /** The number of required arguments
+     * @type {number} */
     static required_arguments = 0
-    /** @type {number} */
+    /** The number of optional arguments
+     * @type {number} */
     static optional_arguments = 0
-    /** @type {boolean} */
+    /** indicate if the final argument may contain whitespace
+     * @type {boolean} */
     static final_argument_whitespace = false
     /** @type {boolean} */
     static has_content = false
-    /** @type {Record<string,any>} */
+    /**
+     * Mapping specifying each option name and the corresponding conversion function.
+     * Option conversion functions take a single parameter, the option argument, validate it and/or convert it to the appropriate form.
+     * @type {Record<string,null | ((option: string)=>any)>} */
     static option_spec = {}
 
     /**
@@ -70,5 +76,19 @@ export class DirectiveProcessor {
             definitions: [...this.context.definitions],
             footnotes: [...this.context.footnotes],
         })
+    }
+
+    /**
+     * Add the name option (if specified) to the node, in a normalized format.
+     * @param {Node} node
+     */
+    addName(node) {
+        if (this.node.options.name) {
+            const name = `${this.node.options.name}`
+                .replace(/\s+/g, ' ')
+                .toLowerCase()
+            // @ts-ignore
+            node.names = [...(node.names || []), name]
+        }
     }
 }
