@@ -15,6 +15,8 @@
  * @property {boolean} [stripPosition] - Strip the position information from all generated nodes
  * @property {number} [offsetLine] - Apply a line offset to the position of all generated nodes
  * @property {number} [offsetColumn] - Apply a column offset to the position of all generated nodes
+ * @property {string[]} [definitions] - A list of definition identifiers to be used for parsing
+ * @property {string[]} [footnotes] - A list of footnote identifiers to be used for parsing
  *
  */
 import { compiler } from 'mdtoken-to-mdast'
@@ -48,9 +50,11 @@ export class NestedParser {
         if (!text) {
             return []
         }
-        // TODO setting up definitions/footnotes
         // TODO allow for disabling headings construct
         const parser = parse(this.options)
+        parser.defined.push(...(options.definitions || []))
+        // @ts-ignore
+        parser.gfmFootnotes = [...(options.footnotes || [])]
         const events = postprocess(
             parser
                 .document()
@@ -74,15 +78,18 @@ export class NestedParser {
 
     /**
      * @param {Value} text
-     * @param {ParseOptions} options
+     * @param {ParseOptions} [options]
      * @returns {PhrasingContent[]}
      */
-    parseInline(text, options = {}) {
+    parseInline(text, options) {
         if (!text) {
             return []
         }
-        // TODO setting up definitions/footnotes
+        options = options || {}
         const parser = parse(this.options)
+        parser.defined = [...(options.definitions || [])]
+        // @ts-ignore
+        parser.gfmFootnotes = [...(options.footnotes || [])]
         let events = postprocess(
             parser
                 .text()

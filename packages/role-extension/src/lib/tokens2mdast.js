@@ -59,7 +59,7 @@ function exitMystRole(token) {
     const nameNode = children[0]
     /** @type {InlineCodeNode} */
     const codeNode = children[1]
-    if (nameNode.type !== 'mystRoleName') {
+    if (nameNode.type !== nodeTypes.mystRoleName) {
         throw new Error(`Expected mystRoleName node, but got ${nameNode.type}`)
     }
     if (codeNode.type !== 'inlineCode') {
@@ -67,7 +67,7 @@ function exitMystRole(token) {
     }
     delete node.children
     node.name = nameNode.value
-    node.content = codeNode.value
+    node.value = codeNode.value
     this.exit(token)
 }
 
@@ -76,7 +76,7 @@ function exitMystRole(token) {
  */
 function enterMystRoleName(token) {
     this.enter(
-        /** @type {MystRoleNameNode} */ ({ type: 'mystRoleName' }),
+        /** @type {MystRoleNameNode} */ ({ type: nodeTypes.mystRoleName }),
         token
     )
     this.buffer()

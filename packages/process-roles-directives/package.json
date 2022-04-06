@@ -49,6 +49,7 @@
         "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js"
     },
     "dependencies": {
+        "micromark-util-normalize-identifier": "^1.0.0",
         "unist-util-visit": "^4.1.0"
     },
     "devDependencies": {

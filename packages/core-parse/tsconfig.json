@@ -2,7 +2,7 @@
     "extends": "../../tsconfig.json",
     "include": [
         "src/**/*.js"
-, "../core-parse/parseDirective.js"    ],
+    ],
     "compilerOptions": {
         "outDir": "./dist/types",
         "baseUrl": "."

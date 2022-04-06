@@ -38,7 +38,7 @@ export default [
         // Build for use as a node module
         input: 'src/index.js',
         plugins: [babelPlugin],
-        external: ['unist-util-visit'],
+        external: ['unist-util-visit', 'micromark-util-normalize-identifier'],
         output: {
             dir: 'dist/module',
             format: 'esm',

@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parser parse 1`] = `
+Object {
+  "ast": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "position": Object {
+              "end": Object {
+                "column": 13,
+                "line": 1,
+                "offset": 12,
+              },
+              "start": Object {
+                "column": 1,
+                "line": 1,
+                "offset": 0,
+              },
+            },
+            "type": "text",
+            "value": "hallo world!",
+          },
+        ],
+        "position": Object {
+          "end": Object {
+            "column": 13,
+            "line": 1,
+            "offset": 12,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "type": "paragraph",
+      },
+    ],
+    "position": Object {
+      "end": Object {
+        "column": 13,
+        "line": 1,
+        "offset": 12,
+      },
+      "start": Object {
+        "column": 1,
+        "line": 1,
+        "offset": 0,
+      },
+    },
+    "type": "root",
+  },
+  "state": Object {},
+}
+`;

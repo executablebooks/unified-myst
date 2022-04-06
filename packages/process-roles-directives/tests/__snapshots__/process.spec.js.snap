@@ -42,17 +42,19 @@ Object {
       "children": Array [
         Object {
           "definitions": Set {
-            "test",
+            "TEST",
           },
           "footnotes": Set {},
+          "state": Object {},
           "type": "leaf",
         },
         Object {
           "definitions": Set {
-            "test",
-            "other",
+            "TEST",
+            "OTHER",
           },
           "footnotes": Set {},
+          "state": Object {},
           "type": "mystDirective",
         },
         Object {
@@ -79,16 +81,18 @@ Object {
         Object {
           "definitions": Set {},
           "footnotes": Set {
-            "test",
+            "TEST",
           },
+          "state": Object {},
           "type": "leaf",
         },
         Object {
           "definitions": Set {},
           "footnotes": Set {
-            "test",
-            "other",
+            "TEST",
+            "OTHER",
           },
+          "state": Object {},
           "type": "mystDirective",
         },
         Object {
@@ -176,7 +180,7 @@ Object {
           "children": Array [
             Object {
               "definitions": Set {
-                "test",
+                "TEST",
               },
               "name": "name",
               "type": "element",
@@ -206,7 +210,7 @@ Object {
           "children": Array [
             Object {
               "footnotes": Set {
-                "test",
+                "TEST",
               },
               "name": "name",
               "type": "element",

@@ -6,7 +6,6 @@ Object {
     Object {
       "children": Array [
         Object {
-          "content": "content",
           "name": "name",
           "position": Object {
             "end": Object {
@@ -21,6 +20,7 @@ Object {
             },
           },
           "type": "mystRole",
+          "value": "content",
         },
       ],
       "position": Object {
@@ -60,8 +60,6 @@ Object {
     Object {
       "children": Array [
         Object {
-          "content": "multi
-line",
           "name": "name",
           "position": Object {
             "end": Object {
@@ -76,6 +74,8 @@ line",
             },
           },
           "type": "mystRole",
+          "value": "multi
+line",
         },
       ],
       "position": Object {
