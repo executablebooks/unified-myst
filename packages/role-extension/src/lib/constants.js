@@ -9,6 +9,6 @@ export const tokenTypes = {
 }
 
 export const nodeTypes = {
-    mystRole: 'role',
-    mystRoleName: 'roleName',
+    mystRole: 'mystRole',
+    mystRoleName: 'mystRoleName',
 }

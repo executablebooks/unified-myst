@@ -23,7 +23,7 @@ for (const role of [
         processor: class extends RoleProcessor {
             run() {
                 const node = u(role, {}, [
-                    { type: 'text', value: this.node.content },
+                    { type: 'text', value: this.node.value },
                 ])
                 return [node]
             }
@@ -37,8 +37,8 @@ const ABBR_PATTERN = /^(.+?)\(([^()]+)\)$/ // e.g. 'CSS (Cascading Style Sheets)
 inlineMarkupExtension.roles['abbr'] = {
     processor: class RoleAbbreviation extends RoleProcessor {
         run() {
-            const match = ABBR_PATTERN.exec(this.node.content)
-            const content = match?.[1]?.trim() ?? this.node.content.trim()
+            const match = ABBR_PATTERN.exec(this.node.value)
+            const content = match?.[1]?.trim() ?? this.node.value.trim()
             const explanation = match?.[2]?.trim() ?? null
             const node = u('abbreviation', { explanation }, [
                 { type: 'text', value: content },

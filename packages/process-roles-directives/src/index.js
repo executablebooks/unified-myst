@@ -8,7 +8,7 @@
  * @typedef RawRoleNode
  * @property {string} type
  * @property {string} name
- * @property {string} content
+ * @property {string} value
  * @property {Position} [position]
  *
  * @typedef RawDirectiveNode
@@ -54,7 +54,7 @@ export function processRolesDirectives(
     /** @param {Node} node */
     function collectIdentifiers(node) {
         switch (node.type) {
-            case 'paragraph' || 'heading' || 'role' || 'mystDirective':
+            case 'paragraph' || 'heading' || 'mystRole' || 'mystDirective':
                 // We don't need to search inside these nodes
                 return SKIP
             case 'definition':
@@ -77,7 +77,7 @@ export function processRolesDirectives(
      * @param {Node} parent
      */
     function processVisitor(node, index, parent) {
-        if (node.type === 'role') {
+        if (node.type === 'mystRole') {
             // @ts-ignore
             if (node.children !== undefined) {
                 // The role is already processed, so we don't need to do anything

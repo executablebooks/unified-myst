@@ -67,7 +67,7 @@ function exitMystRole(token) {
     }
     delete node.children
     node.name = nameNode.value
-    node.content = codeNode.value
+    node.value = codeNode.value
     this.exit(token)
 }
 
