@@ -1,6 +1,6 @@
 {
     "name": "@unified-myst/process-roles-directives",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Utility for walking the AST and applying processors to roles and directives.",
     "license": "MIT",
     "author": "Chris Sewell <chrisj_sewell@hotmail.com>",
