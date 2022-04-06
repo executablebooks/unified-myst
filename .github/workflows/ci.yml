@@ -12,13 +12,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      # - name: Cache packages
-      #   id: cache-npm
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: ${{ runner.os }}-npm-
+      - name: Cache packages
+        id: cache-npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-
       - name: Use Node.js 16.x
         uses: actions/setup-node@v1
         with:
