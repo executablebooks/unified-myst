@@ -3,8 +3,8 @@ import { u } from 'unist-builder'
 
 import { RoleProcessor } from '../roleProcessor.js'
 
-export const spansExtension = {
-    name: 'spans',
+export const inlineExtension = {
+    name: 'inline',
     /** @type {Record<string, {processor: typeof RoleProcessor}>} */
     roles: {},
 }
@@ -18,9 +18,8 @@ for (const role of [
     'strong',
     'subscript',
     'superscript',
-    'title-reference',
 ]) {
-    spansExtension.roles[role] = {
+    inlineExtension.roles[role] = {
         processor: class extends RoleProcessor {
             run() {
                 const node = u(role, {}, [
@@ -35,7 +34,7 @@ for (const role of [
 const ABBR_PATTERN = /^(.+?)\(([^()]+)\)$/ // e.g. 'CSS (Cascading Style Sheets)'
 
 /** Taken from https://github.com/sphinx-doc/sphinx/blob/bf010790ace78ba4bc4231445e73bcecf97e4947/sphinx/roles.py#L321 */
-spansExtension.roles['abbr'] = {
+inlineExtension.roles['abbr'] = {
     processor: class RoleAbbreviation extends RoleProcessor {
         run() {
             const match = ABBR_PATTERN.exec(this.node.content)

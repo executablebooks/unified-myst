@@ -145,6 +145,8 @@ parser.setConfig({myExtension: {addtoc: true}})
 result = parser.toAst('hallo')
 ```
 
+`.use` calls can be chained, to add multiple extensions.
+
 ## Configuration
 
 Each extension can supply its own configuration, as a "stub" for the [`properties`](https://json-schema.org/understanding-json-schema/reference/object.html#properties) key of a JSON schema.
