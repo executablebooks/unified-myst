@@ -1,6 +1,6 @@
 {
     "name": "@unified-myst/core-parse",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "The core entry point for MyST parsing in unified.",
     "license": "MIT",
     "author": "Chris Sewell <chrisj_sewell@hotmail.com>",
