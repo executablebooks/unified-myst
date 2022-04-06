@@ -21,6 +21,10 @@ The dependency graph is as follows:
     - [`@unified-myst/role-extension`](./packages/role-extension/README.md)
     - [`@unified-myst/target-extension`](./packages/target-extension/README.md)
 
+Extensions to [`@unified-myst/core-parse`](./packages/core-parse/README.md):
+
+- [`@unified-myst/render-html`](./packages/render-html/README.md)
+
 ## core parse
 
 [`@unified-myst/core-parse`](./packages/core-parse/README.md) is detailed more fully in it's readme.
