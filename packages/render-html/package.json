@@ -54,7 +54,7 @@
         "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js"
     },
     "dependencies": {
-        "@unified-myst/core-parse": "file:packages/core-parse",
+        "@unified-myst/core-parse": "file:../core-parse",
         "hast-util-to-html": "^8.0.3",
         "mdast-util-to-hast": "^12.1.1"
     },
