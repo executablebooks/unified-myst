@@ -1,17 +1,50 @@
 # unified-myst (IN-DEVELOPMENT)
 
 unified-myst is a [monorepo] containing packages for using MyST (Markedly Structured Text), within the [unified] ecosystem.
-It will eventually inform [myst-spec](https://github.com/executablebooks/myst-spec).
+It is intended to be a reference implementation of [myst-spec](https://github.com/executablebooks/myst-spec).
 
-It currently contains packages for:
+:::{note}
+All packages are [scoped](https://docs.npmjs.com/cli/v8/using-npm/scope) under the `@unified-myst` namespace: <https://www.npmjs.com/org/unified-myst>
+:::
+
+## Packages
+
+The dependency graph is as follows:
+
+- [`@unified-myst/core-parse`](./packages/core-parse/README.md)
+  - Role and directive processing
+    - [`@unified-myst/process-roles-directives`](./packages/process-roles-directives/README.md)
+    - [`@unified-myst/nested-parse`](./packages/nested-parse/README.md)
+  - Syntax parsing extensions
+    - [`@unified-myst/break-extension`](./packages/break-extension/README.md)
+    - [`@unified-myst/comment-extension`](./packages/comment-extension/README.md)
+    - [`@unified-myst/role-extension`](./packages/role-extension/README.md)
+    - [`@unified-myst/target-extension`](./packages/target-extension/README.md)
+
+## core parse
+
+[`@unified-myst/core-parse`](./packages/core-parse/README.md) is detailed more fully in it's readme.
+
+It provides a fully extensible API for parsing MyST to AST.
+
+```javascript
+import { Processor } from '@unified-myst/core-parse'
+import { admonitionsExtension } from '@unified-myst/core-parse/extensions/admonitions.js'
+import { inlineMarkupExtension } from '@unified-myst/core-parse/extensions/inlineMarkup.js'
+
+const parser = new Processor()
+    .use(admonitionsExtension)
+    .use(inlineMarkupExtension)
+const result = parser.toAst('Hello world!')
+```
+
+## Syntax parsing extensions
+
+The extensions provide the following features:
 
 - Parsing each syntax of the MyST language, from source text, to [micromark-tokens]
 - Directly [compiling HTML](https://github.com/micromark/micromark#compile) from the tokens
 - Generating the corresponding [MDAST-nodes] from the tokens, for use with [remark]
-
-All packages are [scoped](https://docs.npmjs.com/cli/v8/using-npm/scope) under the `@unified-myst` namespace: <https://www.npmjs.com/org/unified-myst>
-
-## Example
 
 Take the target syntax `(name)=`.
 
