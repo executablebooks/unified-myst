@@ -29,8 +29,7 @@ It provides a fully extensible API for parsing MyST to AST.
 
 ```javascript
 import { Processor } from '@unified-myst/core-parse'
-import { admonitionsExtension } from '@unified-myst/core-parse/extensions/admonitions.js'
-import { inlineMarkupExtension } from '@unified-myst/core-parse/extensions/inlineMarkup.js'
+import { admonitionsExtension, inlineMarkupExtension } from '@unified-myst/core-parse/extensions'
 
 const parser = new Processor()
     .use(admonitionsExtension)

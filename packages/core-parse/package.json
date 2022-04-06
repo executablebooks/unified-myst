@@ -26,11 +26,21 @@
         "dist"
     ],
     "exports": {
-        "default": {
-            "import": "./dist/module/index.js"
+        ".": {
+            "default": {
+                "import": "./dist/module/index.js"
+            },
+            "development": {
+                "import": "./src/index.js"
+            }
         },
-        "development": {
-            "import": "./src/index.js"
+        "./extensions": {
+            "default": {
+                "import": "./dist/module/extensions/index.js"
+            },
+            "development": {
+                "import": "./src/extensions/index.js"
+            }
         }
     },
     "publishConfig": {

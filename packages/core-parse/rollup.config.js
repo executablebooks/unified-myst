@@ -1,12 +1,11 @@
-import multiInput from 'rollup-plugin-multi-input'
 // import { nodeResolve } from '@rollup/plugin-node-resolve'
 // import { terser } from 'rollup-plugin-terser'
 
 export default [
     {
         // Build for use as a node module
-        input: ['src/**/*.js'],
-        plugins: [multiInput()],
+        input: ['src/index.js', 'src/extensions/index.js'],
+        plugins: [],
         external: [
             '@unified-myst/process-roles-directives',
             '@unified-myst/break-extension',
