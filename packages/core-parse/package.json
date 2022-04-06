@@ -64,12 +64,12 @@
         }
     },
     "dependencies": {
-        "@unified-myst/break-extension": "file:packages/break-extension",
-        "@unified-myst/comment-extension": "file:packages/comment-extension",
-        "@unified-myst/nested-parse": "file:packages/nested-parse",
-        "@unified-myst/process-roles-directives": "file:packages/process-roles-directives",
-        "@unified-myst/role-extension": "file:packages/role-extension",
-        "@unified-myst/target-extension": "file:packages/target-extension",
+        "@unified-myst/break-extension": "file:../break-extension",
+        "@unified-myst/comment-extension": "file:../comment-extension",
+        "@unified-myst/nested-parse": "file:../nested-parse",
+        "@unified-myst/process-roles-directives": "file:../process-roles-directives",
+        "@unified-myst/role-extension": "file:../role-extension",
+        "@unified-myst/target-extension": "file:../target-extension",
         "ajv": "^8.11.0",
         "js-yaml": "^4.1.0",
         "lodash.merge": "^4.6.2",
