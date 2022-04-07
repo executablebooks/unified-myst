@@ -6,7 +6,7 @@ import { u } from 'unist-builder'
 
 import { RoleProcessor } from '../roleProcessor.js'
 import { DirectiveProcessor } from '../directiveProcessor.js'
-import { class_option, flag } from 'src/directiveOptions.js'
+import { class_option, flag } from '../directiveOptions.js'
 
 class MathRole extends RoleProcessor {
     run() {
