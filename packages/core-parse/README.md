@@ -121,7 +121,7 @@ class DirectiveNote extends DirectiveProcessor {
     static has_content = true
     run() {
         const note = u('note', [])
-        note.children = this.nestedParse(this.node.body)
+        note.children = this.nestedParse(this.node.value)
         return [note]
     }
 }

@@ -10,7 +10,7 @@
  * @property {import('@unified-myst/process-roles-directives').Position} [position]
  * @property {string[]} args
  * @property {Record<string, any>} options
- * @property {string} body
+ * @property {string} value
  * @property {number} bodyOffset
  *
  */

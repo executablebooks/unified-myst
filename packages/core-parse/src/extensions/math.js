@@ -35,7 +35,7 @@ export class MathDirective extends DirectiveProcessor {
     }
     run() {
         const node = u('math', {
-            value: this.node.body,
+            value: this.node.value,
             position: this.node.position,
         })
         this.addClasses(node)

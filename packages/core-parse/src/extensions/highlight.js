@@ -24,7 +24,7 @@ export class CodeDirective extends DirectiveProcessor {
     }
     run() {
         const node = u('code', {
-            value: this.node.body,
+            value: this.node.value,
             position: this.node.position,
         })
         this.addName(node)
@@ -71,7 +71,7 @@ export class CodeBlockDirective extends DirectiveProcessor {
     }
     run() {
         const node = u('code', {
-            value: this.node.body,
+            value: this.node.value,
             position: this.node.position,
         })
         this.addName(node)
