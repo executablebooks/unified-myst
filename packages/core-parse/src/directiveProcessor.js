@@ -81,7 +81,23 @@ export class DirectiveProcessor {
     }
 
     /**
-     * Add the name option (if specified) to the node, in a normalized format.
+     * Add the `class` option (if specified) to the node, as a list of strings.
+     * @param {Node} node
+     * @param {string[]} [additional] Any additional classes to append
+     */
+    addClasses(node, additional) {
+        const classes = [
+            ...(this.node.options.class || []),
+            ...(additional || []),
+        ]
+        if (classes.length > 0) {
+            // @ts-ignore
+            node.classes = classes
+        }
+    }
+
+    /**
+     * Add the `name` option (if specified) to the node, in a normalized format.
      * @param {Node} node
      */
     addName(node) {
