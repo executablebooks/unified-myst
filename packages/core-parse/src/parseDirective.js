@@ -17,7 +17,7 @@
  * @typedef IDirectiveData
  * @property {string[]} args
  * @property {Record<string, any>} options
- * @property {string} body
+ * @property {string} value Content of the body
  * @property {number} bodyOffset
  */
 import yaml from 'js-yaml'
@@ -67,7 +67,7 @@ export function deconstructNode(node, directive) {
     return {
         args,
         options,
-        body: body.join('\n'),
+        value: body.join('\n'),
         bodyOffset,
     }
 }

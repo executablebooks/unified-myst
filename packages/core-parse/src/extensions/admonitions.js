@@ -30,7 +30,7 @@ export class BaseAdmonition extends DirectiveProcessor {
                 kind: this.kind,
                 position: this.node.position,
             },
-            this.nestedParse(this.node.body, {
+            this.nestedParse(this.node.value, {
                 keepPosition: true,
                 offsetLine: this.node.bodyOffset,
             })
