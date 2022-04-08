@@ -33,7 +33,6 @@ export class MathDirective extends DirectiveProcessor {
         name: null,
         class: class_option,
         nowrap: flag,
-        /** Note label is a duplication of name: https://github.com/sphinx-doc/sphinx/issues/8476 */
         label: null,
     }
     run() {

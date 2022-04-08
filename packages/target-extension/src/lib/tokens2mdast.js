@@ -39,5 +39,15 @@ function exitMystTarget(token) {
     const node = this.stack[this.stack.length - 1]
     // @ts-ignore
     node.label = data
+    // @ts-ignore
+    node.identifier = normalizeId(data)
     this.exit(token)
+}
+
+/** Return a case- and whitespace-normalized name.
+ * @param {string} label
+ * @returns {string}
+ */
+function normalizeId(label) {
+    return `${label}`.replace(/\s+/g, ' ').trim().toLowerCase()
 }
