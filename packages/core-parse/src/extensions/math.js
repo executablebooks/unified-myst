@@ -30,10 +30,11 @@ export class MathDirective extends DirectiveProcessor {
     static final_argument_whitespace = false
     static has_content = true
     static option_spec = {
-        label: null,
         name: null,
         class: class_option,
         nowrap: flag,
+        /** Note label is a duplication of name: https://github.com/sphinx-doc/sphinx/issues/8476 */
+        label: null,
     }
     run() {
         const node = u('math', {
@@ -41,14 +42,14 @@ export class MathDirective extends DirectiveProcessor {
             position: this.node.position,
         })
         this.addClasses(node)
-        this.addName(node)
+        // label is a duplication of name: https://github.com/sphinx-doc/sphinx/issues/8476
+        // but is prioritised by sphinx
         if (this.node.options.label) {
+            // TODO is name also set, log warning that we are overriding it
             // @ts-ignore
-            node.label = this.node.options.label
-        } else if (this.node.options.name) {
-            // @ts-ignore
-            node.label = this.node.options.name
+            this.node.options.name = this.node.options.label
         }
+        this.addName(node)
         if (this.node.options.nowrap) {
             // @ts-ignore
             node.nowrap = true

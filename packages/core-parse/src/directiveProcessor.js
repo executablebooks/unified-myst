@@ -91,22 +91,25 @@ export class DirectiveProcessor {
             ...(additional || []),
         ]
         if (classes.length > 0) {
+            // TODO ensure no whitespace?
             // @ts-ignore
             node.classes = classes
         }
     }
 
     /**
-     * Add the `name` option (if specified) to the node, in a normalized format.
+     * Add the `name` option (if specified) to the node, in a standard format.
      * @param {Node} node
      */
     addName(node) {
         if (this.node.options.name) {
-            const name = `${this.node.options.name}`
+            // TODO warn if identifier already set (and overwrite?)
+            // @ts-ignore
+            node.label = this.node.options.name
+            // @ts-ignore
+            node.identifier = `${this.node.options.name}`
                 .replace(/\s+/g, ' ')
                 .toLowerCase()
-            // @ts-ignore
-            node.names = [...(node.names || []), name]
         }
     }
 }
