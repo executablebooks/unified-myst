@@ -152,6 +152,7 @@ function parseDirectiveOptions(content, fullSpec) {
             ? fullSpec.option_spec[name]
             : undefined
         if (convertor === undefined) {
+            // TODO, maybe just log warning here, and ignore option
             throw new DirectiveParsingError(`Unknown option: ${name}`)
         }
         let converted_value = value

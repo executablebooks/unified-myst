@@ -15,6 +15,8 @@
  *
  */
 
+import { normalizeId } from './utils'
+
 export class DirectiveProcessor {
     /** The number of required arguments
      * @type {number} */
@@ -107,9 +109,7 @@ export class DirectiveProcessor {
             // @ts-ignore
             node.label = this.node.options.name
             // @ts-ignore
-            node.identifier = `${this.node.options.name}`
-                .replace(/\s+/g, ' ')
-                .toLowerCase()
+            node.identifier = normalizeId(this.node.options.name)
         }
     }
 }

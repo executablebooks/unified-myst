@@ -2,5 +2,6 @@
 export { syntaxMystExtension } from './syntaxMyst.js'
 export { admonitionsExtension } from './admonitions.js'
 export { inlineMarkupExtension } from './inlineMarkup.js'
-export { highlighExtension } from './highlight.js'
+export { highlightExtension } from './highlight.js'
 export { mathExtension } from './math.js'
+export { figureExtension } from './figure.js'

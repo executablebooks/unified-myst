@@ -65,19 +65,16 @@ export class CodeBlockDirective extends DirectiveProcessor {
         dedent: optional_int,
         // TODO
         'emphasize-lines': null,
-        // TODO
         caption: null,
         force: flag,
         name: null,
         class: class_option,
     }
     run() {
-        const node = u('code', {
+        let node = u('code', {
             value: this.node.value,
             position: this.node.position,
         })
-        this.addName(node)
-        this.addClasses(node)
         if (this.node.args[0]) {
             // @ts-ignore
             node.lang = this.node.args[0]
@@ -94,12 +91,33 @@ export class CodeBlockDirective extends DirectiveProcessor {
             // @ts-ignore
             node.force = true
         }
+        this.addClasses(node)
+        if (this.node.options.caption) {
+            // If there is a caption, we wrap the code and caption within a container
+            // classes and identifiers will be added to this container
+            const caption = u(
+                'caption',
+                // TODO position
+                {},
+                this.nestedParse(this.node.options.caption)
+            )
+            const container = u(
+                'container',
+                { kind: 'code', position: this.node.position },
+                [caption, node]
+            )
+            // @ts-ignore
+            node = container
+        }
+        // TODO it would be ideal, if the container could also have classes
+        this.addName(node)
+
         return [node]
     }
 }
 
 /** @type {Extension} */
-export const highlighExtension = {
+export const highlightExtension = {
     name: 'highlight',
     process: {
         mystDirectives: {

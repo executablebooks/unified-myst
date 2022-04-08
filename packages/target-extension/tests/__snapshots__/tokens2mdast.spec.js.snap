@@ -4,6 +4,7 @@ exports[`Convert source to MDAST " (abc)=" 1`] = `
 Object {
   "children": Array [
     Object {
+      "identifier": "abc",
       "label": "abc",
       "position": Object {
         "end": Object {
@@ -40,6 +41,7 @@ exports[`Convert source to MDAST "(a bc)=" 1`] = `
 Object {
   "children": Array [
     Object {
+      "identifier": "a bc",
       "label": "a bc",
       "position": Object {
         "end": Object {
@@ -76,6 +78,7 @@ exports[`Convert source to MDAST "(ab\\\\\\\\c)=" 1`] = `
 Object {
   "children": Array [
     Object {
+      "identifier": "ab\\\\c",
       "label": "ab\\\\c",
       "position": Object {
         "end": Object {
@@ -112,6 +115,7 @@ exports[`Convert source to MDAST "(abc)= " 1`] = `
 Object {
   "children": Array [
     Object {
+      "identifier": "abc",
       "label": "abc",
       "position": Object {
         "end": Object {
@@ -148,6 +152,7 @@ exports[`Convert source to MDAST "(abc)=" 1`] = `
 Object {
   "children": Array [
     Object {
+      "identifier": "abc",
       "label": "abc",
       "position": Object {
         "end": Object {
