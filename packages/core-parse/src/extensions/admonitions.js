@@ -1,5 +1,7 @@
 /** Directives for creating admonitions, also known as call-outs,
  * for including side content without significantly interrupting the document flow.
+ *
+ * @typedef {import('../processor').Extension} Extension
  */
 import { u } from 'unist-builder'
 
@@ -142,19 +144,22 @@ export class Warning extends BaseAdmonition {
     }
 }
 
+/** @type {Extension} */
 export const admonitionsExtension = {
     name: 'admonitions',
-    directives: {
-        admonition: { processor: Admonition },
-        attention: { processor: Attention },
-        caution: { processor: Caution },
-        danger: { processor: Danger },
-        error: { processor: Error },
-        important: { processor: Important },
-        hint: { processor: Hint },
-        note: { processor: Note },
-        seealso: { processor: SeeAlso },
-        tip: { processor: Tip },
-        warning: { processor: Warning },
+    process: {
+        mystDirectives: {
+            admonition: { processor: Admonition },
+            attention: { processor: Attention },
+            caution: { processor: Caution },
+            danger: { processor: Danger },
+            error: { processor: Error },
+            important: { processor: Important },
+            hint: { processor: Hint },
+            note: { processor: Note },
+            seealso: { processor: SeeAlso },
+            tip: { processor: Tip },
+            warning: { processor: Warning },
+        },
     },
 }

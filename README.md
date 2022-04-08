@@ -33,11 +33,12 @@ It provides a fully extensible API for parsing MyST to AST.
 
 ```javascript
 import { Processor } from '@unified-myst/core-parse'
-import { admonitionsExtension, inlineMarkupExtension } from '@unified-myst/core-parse/extensions'
+import import * as ext from '@unified-myst/core-parse/extensions'
 
 const parser = new Processor()
-    .use(admonitionsExtension)
-    .use(inlineMarkupExtension)
+    .use(ext.syntaxMystExtension)
+    .use(ext.admonitionsExtension)
+    .use(ext.inlineMarkupExtension)
 const result = parser.toAst('Hello world!')
 ```
 
