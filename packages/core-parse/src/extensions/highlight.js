@@ -1,4 +1,6 @@
 /** Admonitions to visualise programming codes.
+ *
+ * @typedef {import('../processor').Extension} Extension
  */
 import { u } from 'unist-builder'
 
@@ -96,12 +98,14 @@ export class CodeBlockDirective extends DirectiveProcessor {
     }
 }
 
+/** @type {Extension} */
 export const highlighExtension = {
     name: 'highlight',
-    /** @type {Record<string, {processor: typeof DirectiveProcessor}>} */
-    directives: {
-        code: { processor: CodeDirective },
-        'code-block': { processor: CodeBlockDirective },
+    process: {
+        mystDirectives: {
+            code: { processor: CodeDirective },
+            'code-block': { processor: CodeBlockDirective },
+        },
     },
     // TODO add option for default language
 }

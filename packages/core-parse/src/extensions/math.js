@@ -1,6 +1,8 @@
 /** Mathematics role and directive.
  *
  * Note node naming follows https://github.com/syntax-tree/mdast-util-math
+ *
+ * @typedef {import('../processor').Extension} Extension
  */
 import { u } from 'unist-builder'
 
@@ -55,10 +57,11 @@ export class MathDirective extends DirectiveProcessor {
     }
 }
 
+/** @type {Extension} */
 export const mathExtension = {
     name: 'math',
-    /** @type {Record<string, {processor: typeof RoleProcessor}>} */
-    roles: { math: { processor: MathRole } },
-    /** @type {Record<string, {processor: typeof DirectiveProcessor}>} */
-    directives: { math: { processor: MathDirective } },
+    process: {
+        mystRoles: { math: { processor: MathRole } },
+        mystDirectives: { math: { processor: MathDirective } },
+    },
 }

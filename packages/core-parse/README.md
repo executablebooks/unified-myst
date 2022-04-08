@@ -6,8 +6,9 @@ The core entry point for MyST parsing in [unified](https://unifiedjs.com/).
 
 ```javascript
 import { Processor } from '@unified-myst/core-parse'
+import * as ext from '@unified-myst/core-parse/extensions'
 
-const parser = new Processor()
+const parser = new Processor().use(ext.syntaxMystExtension)
 const result = parser.toAst('Hello world!')
 console.log(JSON.stringify(result.ast, null, 2))
 ```
@@ -79,7 +80,7 @@ The parsing process is as follows:
 
 - Parse the source text into [micromark tokens](https://github.com/micromark/micromark#parse).
   - These can be loosely regarded as a Concrete Syntax Tree (CST), directly mapping to the original source text.
-  - The tokenizer is based on the [CommonMark](https://commonmark.org/) specification, with the additional core syntax extensions:
+  - The tokenizer is based on the [CommonMark](https://commonmark.org/) specification, with `syntaxMystExtension` providing the additional core syntax extensions:
     - [YAML front-matter](https://pandoc.org/MANUAL.html#extension-yaml_metadata_block)
     - [GFM tables](https://github.github.com/gfm/#tables-extension-)
     - [GFM footnotes](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#footnotes)
@@ -104,10 +105,23 @@ The parsing process is as follows:
 
 Everything is an extension!
 
+The processor is initialised with only a CommonMark parser.
+Extensions then add all other functionality:
+
+- name: Each extension must have a name
+- config: Mappings of config keys to JSON schema.
+  - All config is namespaced under the extension name.
+- parsing: List of syntax parsing extensions to apply.
+- hooks: Mappings of event names to hooks to run.
+- process:
+  - mystRoles: Mapping of role names to processors.
+  - mystDirectives: Mapping of directive names to processors.
+
 ```javascript
 import { u } from 'unist-builder'
 import { toc } from 'mdast-util-toc'
 import { Processor, RoleProcessor, DirectiveProcessor } from '@unified-myst/core-parse'
+import * as ext from '@unified-myst/core-parse/extensions'
 
 class RoleAbbr extends RoleProcessor {
     run() {
@@ -135,17 +149,21 @@ function addToc(ast, config) {
 
 myExtension = {
   name: 'myExtension',
-  roles: { abbr: { processor: RoleAbbr } },
-  directives: { note: { processor: DirectiveNote } },
-  hooks: { afterRead: { addtoc: { priority: 100, processor: addToc } } },
+  process: {
+    mystRoles: { abbr: { processor: RoleAbbr } },
+    mystDirectives: { note: { processor: DirectiveNote } },
+  },
+  hooks: {
+    afterRead: { addtoc: { priority: 100, processor: addToc } }
+  },
   config: { addtoc: { default: false, type: 'boolean' } },
 }
-parser = Processor().use(myExtension)
-parser.setConfig({myExtension: {addtoc: true}})
-result = parser.toAst('hallo')
+process = Processor()
+  .use(ext.syntaxMystExtension)
+  .use(myExtension)
+process.setConfig({myExtension: {addtoc: true}})
+result = process.toAst('hallo')
 ```
-
-`.use` calls can be chained, to add multiple extensions.
 
 ## Configuration
 

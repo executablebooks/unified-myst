@@ -15,23 +15,34 @@
 /**
  *
  * @typedef {import('unist').Node} Node
+ * @typedef {import('micromark-util-types').Extension} TokenizerExtension
+ * @typedef {import('mdast-util-from-markdown').Extension} TokenToMdastExtension
  * @typedef {import('@unified-myst/process-roles-directives').roleProcessor} roleProcessor
  * @typedef {import('@unified-myst/process-roles-directives').RawRoleNode} RawRoleNode
  * @typedef {import('@unified-myst/process-roles-directives').directiveProcessor} directiveProcessor
  *
- * @typedef Role
- * @property {boolean} override Whether this can override an existing directive of this name
+ * @typedef ParsingExtension
+ * @property {string} name
+ * @property {TokenizerExtension} tokenizer
+ * @property {TokenToMdastExtension} toMdast
+ *
+ * @typedef MystRole
+ * @property {boolean} [override] Whether this can override an existing directive of this name
  * @property {typeof import('./roleProcessor').RoleProcessor} processor
  * @property {string} extensionName
  *
- * @typedef {Omit<Role, "extensionName">} RoleExtension
+ * @typedef {Omit<MystRole, "extensionName">} MystRoleExtension
  *
- * @typedef Directive
- * @property {boolean} override Whether this can override an existing directive of this name
+ * @typedef MystDirective
+ * @property {boolean} [override] Whether this can override an existing directive of this name
  * @property {typeof import('./directiveProcessor').DirectiveProcessor} processor
  * @property {string} extensionName
  *
- * @typedef {Omit<Directive, "extensionName">} DirectiveExtension
+ * @typedef {Omit<MystDirective, "extensionName">} MystDirectiveExtension
+ *
+ * @typedef ProcessHandles
+ * @property {Record<string, MystRoleExtension>} [mystRoles] Mapping of role names to handlers
+ * @property {Record<string, MystDirectiveExtension>} [mystDirectives] Mapping of directive names to handlers
  *
  * @typedef {(config: Object) => null} beforeConfigProcessor
  *  Intended for modifications of the config, before it is validated.
@@ -64,38 +75,16 @@
  * @property {Hook<afterTransformsProcessor>} afterTransforms
  *
  * @typedef Extension
- * @property {string} name
- * @property {Record<string, RoleExtension>} [roles]
- * @property {Record<string, DirectiveExtension>} [directives]
- * @property {HooksExtension} [hooks]
- * @property {Record<string, ConfigExtension>} [config]
+ * @property {string} name Name of the extension
+ * @property {Record<string, ConfigExtension>} [config] Mapping of config keys to json schema
+ * @property {ParsingExtension[]} [parsing] Parsing extensions ot CommonMark
+ * @property {ProcessHandles} [process]
+ * @property {HooksExtension} [hooks] Mapping of names to event hook extensions
  *
  */
 
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { processRolesDirectives } from '@unified-myst/process-roles-directives'
-import {
-    mystBreakMmarkExt,
-    mystBreakMdastExt,
-} from '@unified-myst/break-extension'
-import {
-    mystCommentMmarkExt,
-    mystCommentMdastExt,
-} from '@unified-myst/comment-extension'
-import {
-    mystRoleMmarkExt,
-    mystRoleMdastExt,
-} from '@unified-myst/role-extension'
-import {
-    mystTargetMmarkExt,
-    mystTargetMdastExt,
-} from '@unified-myst/target-extension'
-import { frontmatter as frontmatterMmarkExt } from 'micromark-extension-frontmatter'
-import { frontmatterFromMarkdown as frontmatterMdastExt } from 'mdast-util-frontmatter'
-import { gfmTable as gfmTableMmarkExt } from 'micromark-extension-gfm-table'
-import { gfmTableFromMarkdown as gfmTableMdastExt } from 'mdast-util-gfm-table'
-import { gfmFootnote as gfmFootnoteMmarkExt } from 'micromark-extension-gfm-footnote'
-import { gfmFootnoteFromMarkdown as gfmFootnoteMdastExt } from 'mdast-util-gfm-footnote'
 
 import { u } from 'unist-builder'
 import Ajv from 'ajv'
@@ -125,14 +114,14 @@ export class Processor {
         this.config = {}
         /**
          * @private
-         * @type {Record<string, Role>}
+         * @type {Record<string, MystRole>}
          */
-        this.roles = {}
+        this.mystRoles = {}
         /**
          * @private
-         * @type {Record<string, Directive>}
+         * @type {Record<string, MystDirective>}
          */
-        this.directives = {}
+        this.mystDirectives = {}
         /**
          * @private
          * @type {Hooks}
@@ -145,45 +134,25 @@ export class Processor {
         }
         /**
          * @private
-         * @type {Record<string, [any, any]>}
+         * @type {ParsingExtension[]}
          */
-        this.parsingExtensions = {
-            comment: [mystCommentMmarkExt, mystCommentMdastExt],
-            role: [mystRoleMmarkExt, mystRoleMdastExt],
-            target: [mystTargetMmarkExt, mystTargetMdastExt],
-            break: [mystBreakMmarkExt, mystBreakMdastExt],
-            frontmatter: [
-                frontmatterMmarkExt(['yaml']),
-                frontmatterMdastExt(['yaml']),
-            ],
-            'gfm-table': [gfmTableMmarkExt, gfmTableMdastExt],
-            'gfm-footnote': [gfmFootnoteMmarkExt(), gfmFootnoteMdastExt()],
-        }
+        this.parsingExtensions = []
     }
 
     /**
      * @private
-     * @param {string[]} [disableExtensions] list of extensions to disable
+     * @param {string[]} [disableExtensions] list of extension names to disable
      * @param {string[]} [disableConstructs] list of constructs to disable
      */
     getMdastConfig(disableExtensions, disableConstructs) {
-        // TODO how to extend parser?
-        /** @type {{extensions: any[], mdastExtensions: any[]}} */
+        /** @type {{extensions: TokenizerExtension[], mdastExtensions: TokenToMdastExtension[]}} */
         const result = { extensions: [], mdastExtensions: [] }
-        for (const name of [
-            'comment',
-            'role',
-            'target',
-            'break',
-            'frontmatter',
-            'gfm-table',
-            'gfm-footnote',
-        ]) {
-            if (disableExtensions && disableExtensions.includes(name)) {
+        for (const ext of this.parsingExtensions) {
+            if (disableExtensions && disableExtensions.includes(ext.name)) {
                 continue
             }
-            result.extensions.push(this.parsingExtensions[name][0])
-            result.mdastExtensions.push(this.parsingExtensions[name][1])
+            result.extensions.push(ext.tokenizer)
+            result.mdastExtensions.push(ext.toMdast)
         }
         if (disableConstructs) {
             // see: https://github.com/micromark/micromark#case-turn-off-constructs
@@ -233,18 +202,18 @@ export class Processor {
 
     /** @param {string} name */
     getRole(name) {
-        if (!this.roles[name]) {
+        if (!this.mystRoles[name]) {
             return null
         }
-        return this.roles[name]
+        return this.mystRoles[name]
     }
 
     /** @param {string} name */
     getDirective(name) {
-        if (!this.directives[name]) {
+        if (!this.mystDirectives[name]) {
             return null
         }
-        return this.directives[name]
+        return this.mystDirectives[name]
     }
 
     /** Iterate hooks for an event, sorted by ascending order of priority
@@ -278,28 +247,36 @@ export class Processor {
                 additionalProperties: false,
             }
         }
-        if (extension.roles) {
-            for (const [name, role] of Object.entries(extension.roles)) {
-                if (!!role.override && this.roles[name]) {
+        if (extension.parsing) {
+            this.parsingExtensions.push(...extension.parsing)
+        }
+        if (extension.process?.mystRoles) {
+            for (const [name, role] of Object.entries(
+                extension.process.mystRoles
+            )) {
+                if (!!role.override && this.mystRoles[name]) {
                     throw new Error(
-                        `Cannot add directive ${name} from extension ${extension.name} to parser, ` +
-                            `already set by extension ${this.roles[name].extensionName}`
+                        `Cannot add mystRole ${name} from extension ${extension.name} to parser, ` +
+                            `already set by extension ${this.mystRoles[name].extensionName}`
                     )
                 }
-                this.roles[name] = { ...role, extensionName: extension.name }
+                this.mystRoles[name] = {
+                    ...role,
+                    extensionName: extension.name,
+                }
             }
         }
-        if (extension.directives) {
+        if (extension.process?.mystDirectives) {
             for (const [name, directive] of Object.entries(
-                extension.directives
+                extension.process.mystDirectives
             )) {
-                if (!!directive.override && this.directives[name]) {
+                if (!!directive.override && this.mystDirectives[name]) {
                     throw new Error(
-                        `Cannot add directive ${name} from extension ${extension.name} to parser, ` +
-                            `already set by extension ${this.directives[name].extensionName}`
+                        `Cannot add mystDirective ${name} from extension ${extension.name} to parser, ` +
+                            `already set by extension ${this.mystDirectives[name].extensionName}`
                     )
                 }
-                this.directives[name] = {
+                this.mystDirectives[name] = {
                     ...directive,
                     extensionName: extension.name,
                 }
