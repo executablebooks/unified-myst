@@ -17,7 +17,7 @@
  *
  */
 
-import { normalizeId } from './utils'
+import { normalizeId } from './utils.js'
 
 export class DirectiveProcessor {
     /** The number of required arguments
