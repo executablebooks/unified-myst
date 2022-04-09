@@ -5,6 +5,8 @@
  * @typedef {import('@unified-myst/process-roles-directives').ParseContext} ParseContext
  * @typedef {import('@unified-myst/nested-parse').NestedParser} NestedParser
  *
+ * @typedef {import('./logger').Logger} Logger
+ *
  */
 
 export class RoleProcessor {
@@ -16,6 +18,8 @@ export class RoleProcessor {
     constructor(node, context, parser) {
         this.node = node
         this.state = context.state
+        /** @type {Logger} */
+        this.logger = context.logger
         /** @private */
         this.parser = parser
         /** @private */

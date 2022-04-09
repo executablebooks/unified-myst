@@ -8,7 +8,8 @@ import { Processor } from '@unified-myst/core-parse'
 
 export class ProcessorHtml extends Processor {
     constructor() {
-        super()
+        // @ts-ignore
+        super(...arguments)
         /** @private */
         this.htmlHandlers = []
     }
