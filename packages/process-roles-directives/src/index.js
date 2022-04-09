@@ -17,7 +17,11 @@
  * @property {string?} [meta]
  * @property {Position} [position]
  *
- * @typedef {{state: Object, definitions: Set<string>, footnotes: Set<string>}} ParseContext
+ * @typedef ParseContext
+ * @property {Object} state the global state of the parser
+ * @property {any} logger the global logger
+ * @property {Set<string>} definitions the set of all scoped definition identifiers
+ * @property {Set<string>} footnotes the set of all scoped footnote identifiers
  *
  * @typedef {(node: RawRoleNode, context: ParseContext) => Node[]} roleProcessor
  * @typedef {(node: RawDirectiveNode, context: ParseContext) => Node} directiveProcessor
@@ -34,6 +38,7 @@ const codeLangRegex = /^\{([^\s}]+)\}$/
  * @param {roleProcessor} processRole
  * @param {directiveProcessor} processDirective
  * @param {Object} [state] the global state
+ * @param {any} [logger] the global logger
  * @param {Set<string>} [defs] Set of definition identifiers in the parent scope
  * @param {Set<string>} [foots] Set of GFM footnote identifiers in the parent scope
  */
@@ -42,6 +47,7 @@ export function processRolesDirectives(
     processRole,
     processDirective,
     state,
+    logger,
     defs,
     foots
 ) {
@@ -88,6 +94,7 @@ export function processRolesDirectives(
             const role = node
             const children = processRole(role, {
                 state: definedState,
+                logger,
                 definitions,
                 footnotes,
             })
@@ -112,6 +119,7 @@ export function processRolesDirectives(
                 },
                 {
                     state: definedState,
+                    logger,
                     definitions,
                     footnotes,
                 }
@@ -121,6 +129,7 @@ export function processRolesDirectives(
                 processRole,
                 processDirective,
                 definedState,
+                logger,
                 new Set(definitions),
                 new Set(footnotes)
             )

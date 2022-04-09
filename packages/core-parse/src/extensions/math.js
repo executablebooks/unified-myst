@@ -45,6 +45,12 @@ export class MathDirective extends DirectiveProcessor {
         // but is prioritised by sphinx
         if (this.node.options.label) {
             // TODO is name also set, log warning that we are overriding it
+            if (this.node.options.name) {
+                this.logger.warning(
+                    'name and label are both set, name will be ignored',
+                    { type: 'math', position: this.node.position }
+                )
+            }
             // @ts-ignore
             this.node.options.name = this.node.options.label
         }

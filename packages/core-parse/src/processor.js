@@ -21,6 +21,8 @@
  * @typedef {import('@unified-myst/process-roles-directives').RawRoleNode} RawRoleNode
  * @typedef {import('@unified-myst/process-roles-directives').directiveProcessor} directiveProcessor
  *
+ * @typedef {import('./logger').Logger} Logger
+ *
  * @typedef ParsingExtension
  * @property {string} name
  * @property {TokenizerExtension} tokenizer
@@ -44,14 +46,14 @@
  * @property {Record<string, MystRoleExtension>} [mystRoles] Mapping of role names to handlers
  * @property {Record<string, MystDirectiveExtension>} [mystDirectives] Mapping of directive names to handlers
  *
- * @typedef {(config: Object) => null} beforeConfigProcessor
+ * @typedef {(config: Object, logger: Logger) => null} beforeConfigProcessor
  *  Intended for modifications of the config, before it is validated.
- * @typedef {(source: string | Uint8Array, config: Object, state: Object) => string | Uint8Array | null} beforeRead
+ * @typedef {(source: string | Uint8Array, config: Object, state: Object, logger: Logger) => string | Uint8Array | null} beforeRead
  *  Intended for modification of the source text and setup of initial state.
  *  If a non-null value is returned, the source text is replaced with the returned value.
- * @typedef {(ast: Node, config: Object, state: Object) => null} afterReadProcessor
+ * @typedef {(ast: Node, config: Object, state: Object, logger: Logger) => null} afterReadProcessor
  *  Intended for modification of the AST.
- * @typedef {(ast: Node, config: Object, state: Object) => null} afterTransformsProcessor
+ * @typedef {(ast: Node, config: Object, state: Object, logger: Logger) => null} afterTransformsProcessor
  *  Intended for extraction of information from the AST.
  *
  * @typedef {{default: any, type: string, [keys: string]: any}} ConfigExtension
@@ -93,10 +95,18 @@ import merge from 'lodash.merge'
 import { NestedParser } from '@unified-myst/nested-parse'
 import { deconstructNode } from './parseDirective.js'
 import { getSchemaDefaults } from './schemaDefaults.js'
+import { ConsoleLogger } from './logger'
 
 export class Processor {
-    constructor() {
-        /** @type {string[]} */
+    /**
+     * @param {Logger} [logger]
+     */
+    constructor(logger) {
+        /** @type {Logger} */
+        this.logger = logger || new ConsoleLogger()
+        /**
+         * @private
+         * @type {string[]} */
         this.extensionNames = []
         /**
          * @private
@@ -112,6 +122,11 @@ export class Processor {
          * @type {{[keys: string]: any}}
          */
         this.config = {}
+        /**
+         * @private
+         * @type {ParsingExtension[]}
+         */
+        this.parsingExtensions = []
         /**
          * @private
          * @type {Record<string, MystRole>}
@@ -132,11 +147,6 @@ export class Processor {
             afterRead: [],
             afterTransforms: [],
         }
-        /**
-         * @private
-         * @type {ParsingExtension[]}
-         */
-        this.parsingExtensions = []
     }
 
     /**
@@ -307,13 +317,13 @@ export class Processor {
         // Setup configuration
         const config = this.getConfig()
         for (const hook of this.iterHooks('beforeConfig')) {
-            hook.processor(config)
+            hook.processor(config, this.logger)
         }
         this.validateConfig(config)
         // Setup initial state
         state = state || {}
         for (const hook of this.iterHooks('beforeRead')) {
-            const newText = hook.processor(text, config, state)
+            const newText = hook.processor(text, config, state, this.logger)
             if (newText !== null) {
                 text = newText
             }
@@ -325,14 +335,15 @@ export class Processor {
             ast,
             this.processRole.bind(this),
             this.processDirective.bind(this),
-            state
+            state,
+            this.logger
         )
         // run post-parse hooks
         for (const hook of this.iterHooks('afterRead')) {
-            hook.processor(ast, config, state)
+            hook.processor(ast, config, state, this.logger)
         }
         for (const hook of this.iterHooks('afterTransforms')) {
-            hook.processor(ast, config, state)
+            hook.processor(ast, config, state, this.logger)
         }
         return { ast, state }
     }

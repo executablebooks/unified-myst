@@ -4,6 +4,8 @@
  * @typedef {import('@unified-myst/process-roles-directives').ParseContext} ParseContext
  * @typedef {import('@unified-myst/nested-parse').NestedParser} NestedParser
  *
+ * @typedef {import('./logger').Logger} Logger
+ *
  * @typedef DirectiveNode
  * @property {string} type
  * @property {string} name
@@ -43,6 +45,8 @@ export class DirectiveProcessor {
     constructor(node, context, parser) {
         this.node = node
         this.state = context.state
+        /** @type {Logger} */
+        this.logger = context.logger
         /** @private */
         this.parser = parser
         /** @private */
