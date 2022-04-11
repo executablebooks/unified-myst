@@ -58,16 +58,13 @@ function propagateTargets(tree, _, __, logger) {
             const next = parent.children[index]
             if (!invisibleNodes.has(next.type)) {
                 // If the next node is a role/directive container, then we should look at its children
-                if (next.type === 'mystRole' || next.type === 'mystDirective') {
+                if (next.type === 'mystDirective') {
                     // Note visit is depth-first
                     visit(next, (subNode) => {
                         if (node.type !== 'mystTarget') {
                             return CONTINUE
                         }
-                        if (
-                            subNode.type !== 'mystRole' &&
-                            subNode.type !== 'mystDirective'
-                        ) {
+                        if (subNode.type !== 'mystDirective') {
                             addMystId(subNode, label)
                             return EXIT
                         }
