@@ -17,7 +17,7 @@
  *
  */
 
-import { normalizeId } from './utils.js'
+import { addMystId } from './utils.js'
 
 export class DirectiveProcessor {
     /** The number of required arguments
@@ -109,11 +109,9 @@ export class DirectiveProcessor {
      */
     addName(node) {
         if (this.node.options.name) {
-            // TODO warn if identifier already set (and overwrite?)
             // @ts-ignore
             node.label = this.node.options.name
-            // @ts-ignore
-            node.identifier = normalizeId(this.node.options.name)
+            addMystId(node, this.node.options.name)
         }
     }
 }
