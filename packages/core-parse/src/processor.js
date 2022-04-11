@@ -15,6 +15,7 @@
 /**
  *
  * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Parent} Parent
  * @typedef {import('micromark-util-types').Extension} TokenizerExtension
  * @typedef {import('mdast-util-from-markdown').Extension} TokenToMdastExtension
  * @typedef {import('@unified-myst/process-roles-directives').roleProcessor} roleProcessor
@@ -46,14 +47,14 @@
  * @property {Record<string, MystRoleExtension>} [mystRoles] Mapping of role names to handlers
  * @property {Record<string, MystDirectiveExtension>} [mystDirectives] Mapping of directive names to handlers
  *
- * @typedef {(config: Object, logger: Logger) => null} beforeConfigProcessor
+ * @typedef {(config: Object, logger: Logger) => void} beforeConfigProcessor
  *  Intended for modifications of the config, before it is validated.
- * @typedef {(source: string | Uint8Array, config: Object, state: Object, logger: Logger) => string | Uint8Array | null} beforeRead
+ * @typedef {(source: string | Uint8Array, config: Object, state: Object, logger: Logger) => string | Uint8Array | void} beforeRead
  *  Intended for modification of the source text and setup of initial state.
  *  If a non-null value is returned, the source text is replaced with the returned value.
- * @typedef {(ast: Node, config: Object, state: Object, logger: Logger) => null} afterReadProcessor
+ * @typedef {(ast: Parent, config: Object, state: Object, logger: Logger) => void} afterReadProcessor
  *  Intended for modification of the AST.
- * @typedef {(ast: Node, config: Object, state: Object, logger: Logger) => null} afterTransformsProcessor
+ * @typedef {(ast: Parent, config: Object, state: Object, logger: Logger) => void} afterTransformsProcessor
  *  Intended for extraction of information from the AST.
  *
  * @typedef {{default: any, type: string, [keys: string]: any}} ConfigExtension
@@ -324,7 +325,7 @@ export class Processor {
         state = state || {}
         for (const hook of this.iterHooks('beforeRead')) {
             const newText = hook.processor(text, config, state, this.logger)
-            if (newText !== null) {
+            if (newText) {
                 text = newText
             }
         }

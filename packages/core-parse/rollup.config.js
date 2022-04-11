@@ -1,11 +1,33 @@
 // import { nodeResolve } from '@rollup/plugin-node-resolve'
 // import { terser } from 'rollup-plugin-terser'
 
+import babel from '@rollup/plugin-babel'
+
+// transpile ES6/7 code
+// This follows micromark-build,
+// to replace unnecessary asserts.
+const babelPlugin = babel({
+    babelHelpers: 'bundled',
+    plugins: [
+        [
+            'babel-plugin-unassert',
+            {
+                modules: [
+                    'assert',
+                    'node:assert',
+                    'power-assert',
+                    'uvu/assert',
+                ],
+            },
+        ],
+    ],
+})
+
 export default [
     {
         // Build for use as a node module
         input: ['src/index.js', 'src/extensions/index.js'],
-        plugins: [],
+        plugins: [babelPlugin],
         external: [
             '@unified-myst/process-roles-directives',
             '@unified-myst/break-extension',
@@ -24,6 +46,7 @@ export default [
             'micromark-extension-gfm-footnote',
             'mdast-util-gfm-footnote',
             'unist-builder',
+            'unist-util-visit',
         ],
         output: {
             dir: 'dist/module',

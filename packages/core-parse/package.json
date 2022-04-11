@@ -80,7 +80,8 @@
         "micromark-extension-frontmatter": "^1.0.0",
         "micromark-extension-gfm-footnote": "^1.0.4",
         "micromark-extension-gfm-table": "^1.0.5",
-        "unist-builder": "^3.0.0"
+        "unist-builder": "^3.0.0",
+        "unist-util-visit": "^4.1.0"
     },
     "devDependencies": {
         "@types/js-yaml": "^4.0.5",
