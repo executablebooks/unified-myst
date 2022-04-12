@@ -92,7 +92,7 @@ import { fromMarkdown } from 'mdast-util-from-markdown'
 import { processRolesDirectives } from '@unified-myst/process-roles-directives'
 
 import { u } from 'unist-builder'
-import { visit, SKIP, CONTINUE, EXIT } from 'unist-util-visit'
+import { visit, SKIP, CONTINUE } from 'unist-util-visit'
 import Ajv from 'ajv'
 import merge from 'lodash.merge'
 
