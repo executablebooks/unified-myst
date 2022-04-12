@@ -4,7 +4,7 @@
  * @property {number} priority Hooks are executed, sorted by ascending order of priority (zero first).
  * @property {P} processor
  * @property {string} name
- * @property {string} extensionName
+ * @property {string} [extensionName]
  */
 
 /**
@@ -21,6 +21,8 @@
  * @typedef {import('@unified-myst/process-roles-directives').roleProcessor} roleProcessor
  * @typedef {import('@unified-myst/process-roles-directives').RawRoleNode} RawRoleNode
  * @typedef {import('@unified-myst/process-roles-directives').directiveProcessor} directiveProcessor
+ *
+ * @typedef {Node} CrossReference
  *
  * @typedef {import('./logger').Logger} Logger
  *
@@ -54,7 +56,7 @@
  *  If a non-null value is returned, the source text is replaced with the returned value.
  * @typedef {(ast: Parent, config: Object, state: Object, logger: Logger) => void} afterReadProcessor
  *  Intended for modification of the AST.
- * @typedef {(ast: Parent, config: Object, state: Object, logger: Logger) => void} afterTransformsProcessor
+ * @typedef {(node: CrossReference, config: Object, state: Object, logger: Logger) => Node | null} resolveCrossReference
  *  Intended for extraction of information from the AST.
  *
  * @typedef {{default: any, type: string, [keys: string]: any}} ConfigExtension
@@ -63,19 +65,19 @@
  * @property {Record<string, HookExtension<beforeConfigProcessor>>} [beforeConfig]
  * @property {Record<string, HookExtension<beforeRead>>} [beforeRead]
  * @property {Record<string, HookExtension<afterReadProcessor>>} [afterRead]
- * @property {Record<string, HookExtension<afterTransformsProcessor>>} [afterTransforms]
+ * @property {Record<string, HookExtension<resolveCrossReference>>} [resolveCrossReference]
  *
  * @typedef Hooks
  * @property {Hook<beforeConfigProcessor>[]} beforeConfig
  * @property {Hook<beforeRead>[]} beforeRead
  * @property {Hook<afterReadProcessor>[]} afterRead
- * @property {Hook<afterTransformsProcessor>[]} afterTransforms
+ * @property {Hook<resolveCrossReference>[]} resolveCrossReference
  *
  * @typedef HookMap
  * @property {Hook<beforeConfigProcessor>} beforeConfig
  * @property {Hook<beforeRead>} beforeRead
  * @property {Hook<afterReadProcessor>} afterRead
- * @property {Hook<afterTransformsProcessor>} afterTransforms
+ * @property {Hook<resolveCrossReference>} resolveCrossReference
  *
  * @typedef Extension
  * @property {string} name Name of the extension
@@ -90,6 +92,7 @@ import { fromMarkdown } from 'mdast-util-from-markdown'
 import { processRolesDirectives } from '@unified-myst/process-roles-directives'
 
 import { u } from 'unist-builder'
+import { visit, SKIP, CONTINUE } from 'unist-util-visit'
 import Ajv from 'ajv'
 import merge from 'lodash.merge'
 
@@ -145,9 +148,43 @@ export class Processor {
         this.hooks = {
             beforeConfig: [],
             beforeRead: [],
-            afterRead: [],
-            afterTransforms: [],
+            afterRead: [
+                {
+                    name: 'resolveCrossReference',
+                    // TODO re-assess priority
+                    priority: 400,
+                    processor: this.runResolveCrossReferences.bind(this),
+                },
+            ],
+            resolveCrossReference: [],
         }
+    }
+
+    /**
+     * @private
+     * @param {Parent} ast
+     * @param {Object} config
+     * @param {Object} state
+     * @param {Logger} logger
+     */
+    runResolveCrossReferences(ast, config, state, logger) {
+        visit(ast, (node, index, parent) => {
+            if (node.type !== 'crossReference') {
+                return CONTINUE
+            }
+            for (const hook of this.iterHooks('resolveCrossReference')) {
+                const result = hook.processor(node, config, state, logger)
+                if (result) {
+                    // @ts-ignore
+                    parent[index] = result
+                    return SKIP
+                }
+            }
+            logger.warning(`Could not resolve cross reference`, {
+                position: node.position,
+                type: 'crossReference',
+            })
+        })
     }
 
     /**
@@ -341,9 +378,6 @@ export class Processor {
         )
         // run post-parse hooks
         for (const hook of this.iterHooks('afterRead')) {
-            hook.processor(ast, config, state, this.logger)
-        }
-        for (const hook of this.iterHooks('afterTransforms')) {
             hook.processor(ast, config, state, this.logger)
         }
         return { ast, state }

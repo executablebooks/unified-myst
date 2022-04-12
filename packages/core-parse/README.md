@@ -97,9 +97,7 @@ The parsing process is as follows:
 
 - Run all `afterRead` event hooks, by priority order.
   - `afterRead` processors are operations which modify the syntax tree.
-
-- Run all `afterTransforms` event hooks, by priority order.
-  - `afterTransforms` processors are operations which extract information from the syntax tree to the global state.
+  - On priority 400, walk through the AST and, when encountering a `crossReference`, run all `resolveCrossReference` event hooks, by priority order. If a hook returns a node, replace the `crossReference` with that node, and continue.
 
 ## Extension mechanism
 
