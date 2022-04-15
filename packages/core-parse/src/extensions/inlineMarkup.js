@@ -14,7 +14,6 @@ export const inlineMarkupExtension = {
 
 /** Taken from https://github.com/live-clones/docutils/blob/48bb76093b4ba83654b2f2c86e7c52c4bb39c63b/docutils/docutils/parsers/rst/roles.py#L257-L264 */
 for (const role of [
-    'abbreviation',
     'acronym',
     'literal',
     'emphasis',
@@ -38,17 +37,23 @@ for (const role of [
 const ABBR_PATTERN = /^(.+?)\(([^()]+)\)$/ // e.g. 'CSS (Cascading Style Sheets)'
 
 /** Taken from https://github.com/sphinx-doc/sphinx/blob/bf010790ace78ba4bc4231445e73bcecf97e4947/sphinx/roles.py#L321 */
+
+class RoleAbbreviation extends RoleProcessor {
+    run() {
+        const match = ABBR_PATTERN.exec(this.node.value)
+        const content = match?.[1]?.trim() ?? this.node.value.trim()
+        const title = match?.[2]?.trim() ?? null
+        const node = u('abbreviation', { title }, [
+            { type: 'text', value: content },
+        ])
+        return [node]
+    }
+}
 // @ts-ignore
 inlineMarkupExtension.process.mystRoles['abbr'] = {
-    processor: class RoleAbbreviation extends RoleProcessor {
-        run() {
-            const match = ABBR_PATTERN.exec(this.node.value)
-            const content = match?.[1]?.trim() ?? this.node.value.trim()
-            const explanation = match?.[2]?.trim() ?? null
-            const node = u('abbreviation', { explanation }, [
-                { type: 'text', value: content },
-            ])
-            return [node]
-        }
-    },
+    processor: RoleAbbreviation,
+}
+// @ts-ignore
+inlineMarkupExtension.process.mystRoles['abbreviation'] = {
+    processor: RoleAbbreviation,
 }
