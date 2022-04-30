@@ -33,7 +33,7 @@ It provides a fully extensible API for parsing MyST to AST.
 
 ```javascript
 import { Processor } from '@unified-myst/core-parse'
-import import * as ext from '@unified-myst/core-parse/extensions'
+import * as ext from '@unified-myst/core-parse/extensions'
 
 const parser = new Processor()
     .use(ext.syntaxMystExtension)

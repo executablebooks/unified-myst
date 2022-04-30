@@ -1,5 +1,142 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Parser abbr 1`] = `
+Object {
+  "ast": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "type": "text",
+                    "value": "CSS",
+                  },
+                ],
+                "title": "Cascading Style Sheets",
+                "type": "abbreviation",
+              },
+            ],
+            "name": "abbr",
+            "position": Object {
+              "end": Object {
+                "column": 37,
+                "line": 1,
+                "offset": 36,
+              },
+              "start": Object {
+                "column": 1,
+                "line": 1,
+                "offset": 0,
+              },
+            },
+            "type": "mystRole",
+            "value": "CSS (Cascading Style Sheets)",
+          },
+        ],
+        "position": Object {
+          "end": Object {
+            "column": 37,
+            "line": 1,
+            "offset": 36,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "type": "paragraph",
+      },
+    ],
+    "position": Object {
+      "end": Object {
+        "column": 37,
+        "line": 1,
+        "offset": 36,
+      },
+      "start": Object {
+        "column": 1,
+        "line": 1,
+        "offset": 0,
+      },
+    },
+    "type": "root",
+  },
+  "state": Object {},
+}
+`;
+
+exports[`Parser abbreviation 1`] = `
+Object {
+  "ast": Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "type": "text",
+                    "value": "CSS (Cascading Style Sheets)",
+                  },
+                ],
+                "type": "abbreviation",
+              },
+            ],
+            "name": "abbreviation",
+            "position": Object {
+              "end": Object {
+                "column": 45,
+                "line": 1,
+                "offset": 44,
+              },
+              "start": Object {
+                "column": 1,
+                "line": 1,
+                "offset": 0,
+              },
+            },
+            "type": "mystRole",
+            "value": "CSS (Cascading Style Sheets)",
+          },
+        ],
+        "position": Object {
+          "end": Object {
+            "column": 45,
+            "line": 1,
+            "offset": 44,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "type": "paragraph",
+      },
+    ],
+    "position": Object {
+      "end": Object {
+        "column": 45,
+        "line": 1,
+        "offset": 44,
+      },
+      "start": Object {
+        "column": 1,
+        "line": 1,
+        "offset": 0,
+      },
+    },
+    "type": "root",
+  },
+  "state": Object {},
+}
+`;
+
 exports[`Parser parse 1`] = `
 Object {
   "ast": Object {
