@@ -14,6 +14,7 @@ export const inlineMarkupExtension = {
 
 /** Taken from https://github.com/live-clones/docutils/blob/48bb76093b4ba83654b2f2c86e7c52c4bb39c63b/docutils/docutils/parsers/rst/roles.py#L257-L264 */
 for (const role of [
+    'abbreviation',
     'acronym',
     'literal',
     'emphasis',
@@ -51,9 +52,5 @@ class RoleAbbreviation extends RoleProcessor {
 }
 // @ts-ignore
 inlineMarkupExtension.process.mystRoles['abbr'] = {
-    processor: RoleAbbreviation,
-}
-// @ts-ignore
-inlineMarkupExtension.process.mystRoles['abbreviation'] = {
     processor: RoleAbbreviation,
 }

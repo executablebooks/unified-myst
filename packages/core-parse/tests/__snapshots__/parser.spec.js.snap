@@ -81,10 +81,9 @@ Object {
                 "children": Array [
                   Object {
                     "type": "text",
-                    "value": "CSS",
+                    "value": "CSS (Cascading Style Sheets)",
                   },
                 ],
-                "title": "Cascading Style Sheets",
                 "type": "abbreviation",
               },
             ],
